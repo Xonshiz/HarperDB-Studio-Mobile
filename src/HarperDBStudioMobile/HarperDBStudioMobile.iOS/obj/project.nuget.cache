@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "9No75SrhUkn88AJWdCw0+vdqABBpNsylFVgCSJsXWkutCADq3fN9x9Ywslcay3kMDD+EZJ4MvEi6B9uHJabHrw==",
+  "dgSpecHash": "Z1GEqZNL7IOekp3t5jkk0XzOT112sl3V9SwzLRnDV0/Qii0W50cFLyKh569JtCojWWSwIlDDGxEdjIP9MMFjGA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Xonshiz\\Documents\\GitHub\\HDBM\\src\\HarperDBStudioMobile\\HarperDBStudioMobile.iOS\\HarperDBStudioMobile.iOS.csproj",
+  "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile.iOS/HarperDBStudioMobile.iOS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Xonshiz\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.6.1\\xamarin.essentials.1.6.1.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\5.0.0.2012\\xamarin.forms.5.0.0.2012.nupkg.sha512"
+    "/Users/xonshiz/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512"
   ],
   "logs": []
 }

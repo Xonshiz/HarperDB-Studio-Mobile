@@ -16,7 +16,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -88,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HarperDBStudioMobile\HarperDBStudioMobile.csproj">
-      <Project>{8E519B83-E22E-41B8-8EA3-D092BF70D887}</Project>
+      <Project>{A49DE8AE-FCCB-43AF-B2A5-1053E6139E0A}</Project>
       <Name>HarperDBStudioMobile</Name>
     </ProjectReference>
   </ItemGroup>

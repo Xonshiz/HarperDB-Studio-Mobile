@@ -1,0 +1,10 @@
+
+src/HarperDBStudioMobile/.vs/*
+src/HarperDBStudioMobile/HarperDBStudioMobile.Android/bin/*
+src/HarperDBStudioMobile/HarperDBStudioMobile.Android/obj/*
+src/HarperDBStudioMobile/HarperDBStudioMobile.iOS/bin/*
+src/HarperDBStudioMobile/HarperDBStudioMobile.iOS/obj/*
+src/HarperDBStudioMobile/HarperDBStudioMobile.UWP/bin/*
+src/HarperDBStudioMobile/HarperDBStudioMobile.UWP/obj/*
+src/HarperDBStudioMobile/HarperDBStudioMobile/bin/*
+src/HarperDBStudioMobile/HarperDBStudioMobile/obj/*

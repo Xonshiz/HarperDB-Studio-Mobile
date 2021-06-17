@@ -1,14 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "XjTPOXF6psZccUZLkWOzNbtjoszoKAVrnINhXHBiAImkzaQoCPDUGD++IRXItLfucBh3FdlH6quOwEkKsib6Ew==",
+  "dgSpecHash": "qpRCkfFyrrK4JxGnCOn7cNuodgpp2P/6ih3dUjmhsTt8gazh8Kll/LDfzEqJSGdnGrA6yDN43R0zruTgyrKBsw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Xonshiz\\Documents\\GitHub\\HDBM\\src\\HarperDBStudioMobile\\HarperDBStudioMobile\\HarperDBStudioMobile.csproj",
+  "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile/HarperDBStudioMobile.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Xonshiz\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\Xonshiz\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\Xonshiz\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.6.1\\xamarin.essentials.1.6.1.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\5.0.0.2012\\xamarin.forms.5.0.0.2012.nupkg.sha512"
+    "/Users/xonshiz/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512"
   ],
   "logs": []
 }
