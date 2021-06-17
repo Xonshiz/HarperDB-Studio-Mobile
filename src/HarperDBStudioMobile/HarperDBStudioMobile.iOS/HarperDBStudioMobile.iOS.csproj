@@ -134,11 +134,14 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Refit">
+      <Version>6.0.38</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\HarperDBStudioMobile\HarperDBStudioMobile.csproj">
-      <Project>{8E519B83-E22E-41B8-8EA3-D092BF70D887}</Project>
+      <Project>{A49DE8AE-FCCB-43AF-B2A5-1053E6139E0A}</Project>
       <Name>HarperDBStudioMobile</Name>
     </ProjectReference>
   </ItemGroup>

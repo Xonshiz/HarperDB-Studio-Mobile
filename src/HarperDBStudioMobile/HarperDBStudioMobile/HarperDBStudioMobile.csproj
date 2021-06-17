@@ -8,5 +8,32 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Refit" Version="6.0.38" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\SignUpPage.xaml.cs">
+      <DependentUpon>SignUpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Organizations.xaml.cs">
+      <DependentUpon>Organizations.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Instances.xaml.cs">
+      <DependentUpon>Instances.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TableData.xaml.cs">
+      <DependentUpon>TableData.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TableRecordEdit.xaml.cs">
+      <DependentUpon>TableRecordEdit.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Utils\" />
+    <None Remove="Refit" />
+    <None Remove="Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>

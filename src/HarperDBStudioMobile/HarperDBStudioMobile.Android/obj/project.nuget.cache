@@ -1,10 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "7uR3jBGKlQgRzoN1BgJA27YNGQAu7SuGUdpfKaoS8y0f0iUuq3Pw/VWkbM28T8Ji87WTJzejQ/SomhrjwmLQzQ==",
+  "dgSpecHash": "kRE3Ru3bpnkoVb2OmOM0pKwNRx4CyIQynqq8571ajTAyWyzc8VeQ6HiEzvmyhWeHq85HZ0oWr3U4NOP+SgO/Xw==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile.Android/HarperDBStudioMobile.Android.csproj",
   "expectedPackageFiles": [
+    "/Users/xonshiz/.nuget/packages/microsoft.bcl.asyncinterfaces/5.0.0/microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/refit/6.0.38/refit.6.0.38.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.net.http.json/5.0.0/system.net.http.json.5.0.0.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.runtime.compilerservices.unsafe/5.0.0/system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.text.encodings.web/5.0.0/system.text.encodings.web.5.0.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.text.json/5.0.1/system.text.json.5.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.androidx.activity/1.1.0.5/xamarin.androidx.activity.1.1.0.5.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.androidx.annotation/1.1.0.8/xamarin.androidx.annotation.1.1.0.8.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.androidx.annotation.experimental/1.0.0.8/xamarin.androidx.annotation.experimental.1.0.0.8.nupkg.sha512",

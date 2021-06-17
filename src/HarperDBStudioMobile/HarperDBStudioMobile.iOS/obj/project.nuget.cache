@@ -1,10 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "Z1GEqZNL7IOekp3t5jkk0XzOT112sl3V9SwzLRnDV0/Qii0W50cFLyKh569JtCojWWSwIlDDGxEdjIP9MMFjGA==",
+  "dgSpecHash": "dkXHn7BKb39tphROmA8Wr0D0NIuySLT42+l6e7a/0U8Jeq1nWZCkoQlH1xgrYqffIn/VUUUGqbJ7R5FAUt5eDQ==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile.iOS/HarperDBStudioMobile.iOS.csproj",
   "expectedPackageFiles": [
+    "/Users/xonshiz/.nuget/packages/microsoft.bcl.asyncinterfaces/5.0.0/microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/refit/6.0.38/refit.6.0.38.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.net.http.json/5.0.0/system.net.http.json.5.0.0.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.runtime.compilerservices.unsafe/5.0.0/system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.text.encodings.web/5.0.0/system.text.encodings.web.5.0.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/system.text.json/5.0.1/system.text.json.5.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512"
   ],
