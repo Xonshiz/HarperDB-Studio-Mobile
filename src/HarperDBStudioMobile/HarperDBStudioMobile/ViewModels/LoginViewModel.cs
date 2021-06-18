@@ -22,7 +22,7 @@ namespace HarperDBStudioMobile.ViewModels
         {
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             restClient = RestService.For<IRestClient>(Utils.Utils.BASE_API_URL);
-            var loginInfo = await restClient.GetUser("");
+            //var loginInfo = await restClient.GetUser("");
             //await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
         }
     }
