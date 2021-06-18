@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "o+07j0zUXkMDzh47jIN55rjg+fm9hEpaqvfXBeZCo7M82t3PzW2oPb78JRXFsTSQfdL5HowD1ulPg6I+hHf7XQ==",
+  "dgSpecHash": "uz2D9yrERGz2oDrFV7ujXVvHuDlMPb7aUPfMx25njdDkSWW0HeOVCKlou2yFMQdWUKSz3KG5M9Ei+dpyelYfBg==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile/HarperDBStudioMobile.csproj",
   "expectedPackageFiles": [
     "/Users/xonshiz/.nuget/packages/microsoft.bcl.asyncinterfaces/5.0.0/microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/refit/6.0.38/refit.6.0.38.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",

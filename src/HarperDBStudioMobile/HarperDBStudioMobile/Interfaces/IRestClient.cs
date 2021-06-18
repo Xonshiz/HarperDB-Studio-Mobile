@@ -8,7 +8,7 @@ namespace HarperDBStudioMobile.Interfaces
     public interface IRestClient
     {
         [Post("/getUser")]
-        Task<GetUserModel> GetUser([Body] RequestGetUserModel body);
+        Task<ApiResponse<GetUserModel>> GetUser([Body] RequestGetUserModel body);
 
         [Post("/6")]
         Task<StripeCallModel> StripeCall([Body] string body);

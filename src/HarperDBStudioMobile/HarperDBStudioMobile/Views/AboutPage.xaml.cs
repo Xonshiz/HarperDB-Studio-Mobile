@@ -10,6 +10,14 @@ namespace HarperDBStudioMobile.Views
         public AboutPage()
         {
             InitializeComponent();
+            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+            //return base.OnBackButtonPressed();
+        }
+        
     }
 }

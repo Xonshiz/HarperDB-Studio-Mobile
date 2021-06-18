@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "dkXHn7BKb39tphROmA8Wr0D0NIuySLT42+l6e7a/0U8Jeq1nWZCkoQlH1xgrYqffIn/VUUUGqbJ7R5FAUt5eDQ==",
+  "dgSpecHash": "8qR8GCCGONut6gbXXooK+6ex8wmFxA+dKuGf8hbAkbcDH3Ti2HZNmOMDHTRmRdKblb6dn7orJ94O3gZ7q/COPg==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile.iOS/HarperDBStudioMobile.iOS.csproj",
   "expectedPackageFiles": [
     "/Users/xonshiz/.nuget/packages/microsoft.bcl.asyncinterfaces/5.0.0/microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/refit/6.0.38/refit.6.0.38.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.net.http.json/5.0.0/system.net.http.json.5.0.0.nupkg.sha512",
