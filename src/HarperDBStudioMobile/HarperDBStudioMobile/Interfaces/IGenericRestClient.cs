@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using HarperDBStudioMobile.Models;
 using Refit;
 
 namespace HarperDBStudioMobile.Interfaces
@@ -8,6 +9,6 @@ namespace HarperDBStudioMobile.Interfaces
     {
         //var api = RestService.For<IReallyExcitingCrudApi<User, string>>("http://api.example.com/users");
         [Post("/")]
-        Task<T> InstanceCall([Body] TKey body);
+        Task<ApiResponse<T>> InstanceCall([Header("Authorization")] string authString, [Body] TKey body);
     }
 }

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="HarperDBStudioMobile.Views.InstanceDetailPage">
+    <StackLayout>
+        <Picker x:Name="schemaPicker"
+                Title="Select a Schema"
+                TitleColor="Red"
+                SelectedIndexChanged="schemaPicker_SelectedIndexChanged">
+        </Picker>
+        <Picker x:Name="tablePicker"
+                Title="Select a Table"
+                TitleColor="Black"
+                SelectedIndexChanged="tablePicker_SelectedIndexChanged">
+        </Picker>
+    </StackLayout>
+</ContentPage>

@@ -40,9 +40,10 @@ namespace HarperDBStudioMobile.Views
 
                 var selectedRequest = selectItem as InstanceModel;
                 LoggedInUserCurrentSelections.INSTANCE_BASE_URL = selectedRequest.url;
-                //Can add the auth to DICTIONARY here.
 
                 //LoggedInUserCurrentSelections.current_organization_customer_id = selectedRequest.customer_id;
+                //If we have login data cached and it works, move it
+                //Also populate current auth header here again : LoggedInUserCurrentSelections.current_instance_auth = basicAuth;
                 //await Shell.Current.GoToAsync($"{nameof(Instances)}");
 
             });
@@ -83,6 +84,11 @@ namespace HarperDBStudioMobile.Views
             }
         }
 
+        private async void PushToInstanceDetails()
+        {
+            await Shell.Current.GoToAsync($"{nameof(InstanceDetailPage)}");
+        }
+
         private async void instance_submit_button_Clicked(System.Object sender, System.EventArgs e)
         {
             if (String.IsNullOrWhiteSpace(instance_username.Text) || String.IsNullOrWhiteSpace(instance_password.Text))
@@ -99,7 +105,9 @@ namespace HarperDBStudioMobile.Views
                 var instanceAuthVerification = await instanceRestClient.VerifyInstanceLogin(LoggedInUserCurrentSelections.current_instance_auth, requestOperationsModel);
                 if (instanceAuthVerification != null && instanceAuthVerification.IsSuccessStatusCode && instanceAuthVerification.Content.username != null)
                 {
+                    //Can add the auth to DICTIONARY here.
                     await DisplayAlert("Success!", instanceAuthVerification.Content.username, "OK");
+                    this.PushToInstanceDetails();
                 } else
                 {
                     await DisplayAlert("Error!", "Wrong Login Info?", "OK");
