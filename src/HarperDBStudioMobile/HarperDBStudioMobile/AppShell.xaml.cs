@@ -19,6 +19,7 @@ namespace HarperDBStudioMobile
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(AboutPage), typeof(AboutPage));
             Routing.RegisterRoute(nameof(Organizations), typeof(Organizations));
+            Routing.RegisterRoute(nameof(Instances), typeof(Instances));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

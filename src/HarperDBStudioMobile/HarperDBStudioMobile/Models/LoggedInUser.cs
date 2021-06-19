@@ -5,6 +5,7 @@ namespace HarperDBStudioMobile.Models
 {
     public static class LoggedInUser
     {
+        public static string BaseAuth { get; set; }
         public static string Firstname { get; set; }
         public static string Lastname { get; set; }
         public static string Email { get; set; }
@@ -15,5 +16,6 @@ namespace HarperDBStudioMobile.Models
         public static object GithubRepo { get; set; }
         public static long LastLogin { get; set; }
         public static List<OrgModel> Orgs { get; set; }
+        public static Dictionary<string, Dictionary<string, string>> InstanceKeyPairs = new Dictionary<string, Dictionary<string, string>>() { };
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage
+<ContentPage x:Name="currentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:HarperDBStudioMobile.ViewModels"
     x:Class="HarperDBStudioMobile.Views.Organizations">
@@ -17,6 +17,9 @@
     <CarouselView.ItemTemplate>
         <DataTemplate>
             <StackLayout>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CarouselItemTapped,Source={x:Reference currentPage}}" CommandParameter="{Binding .}"/>
+                </StackLayout.GestureRecognizers>
                 <Frame HasShadow="True"
                        BorderColor="DarkGray"
                        CornerRadius="5"

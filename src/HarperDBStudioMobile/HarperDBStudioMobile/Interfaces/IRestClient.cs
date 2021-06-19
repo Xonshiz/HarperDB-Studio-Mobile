@@ -23,7 +23,7 @@ namespace HarperDBStudioMobile.Interfaces
         Task<GetPrepaidSubscriptionModel> GetPrepaidSubscriptions([Body] RequestGetPrepaidSubscriptionModel body);
 
         [Post("/getInstances")]
-        Task<GetInstancesModel> GetInstances([Body] RequestGetInstancesModel body);
+        Task<ApiResponse<GetInstancesModel>> GetInstances([Header("Authorization")] string authString, [Body] RequestGetInstancesModel body);
 
         [Post("/getAlarms")]
         Task<GetAlarmsModel> GetAlarms([Body] RequestGetAlarmsModel body );

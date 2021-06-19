@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage
+    x:Name="currentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:HarperDBStudioMobile.ViewModels"
     x:Class="HarperDBStudioMobile.Views.Instances">
@@ -11,7 +12,38 @@
             <Color x:Key="Accent">#96d1ff</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid>
-        
-    </Grid>
+
+    <CarouselView x:Name="InstanceCarousel">
+        <CarouselView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CarouselItemTapped,Source={x:Reference currentPage}}" CommandParameter="{Binding .}"/>
+                    </StackLayout.GestureRecognizers>
+                    <Frame HasShadow="True"
+                            BorderColor="DarkGray"
+                            CornerRadius="5"
+                            Margin="20"
+                            HeightRequest="300"
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand">
+                        <StackLayout>
+                            <Label Text="{Binding rule_arn}"
+                                    FontAttributes="Bold"
+                                    FontSize="Large"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                            <Label Text="{Binding rule_arn}"
+                                    HorizontalOptions="Center" />
+                            <Label Text="{Binding instance_name}"
+                                    FontAttributes="Italic"
+                                    HorizontalOptions="Center"
+                                    MaxLines="5"
+                                    LineBreakMode="TailTruncation" />
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </DataTemplate>
+        </CarouselView.ItemTemplate>
+    </CarouselView>
 </ContentPage>
