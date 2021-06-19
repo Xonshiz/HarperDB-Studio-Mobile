@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
 namespace HarperDBStudioMobile.Models
 {
     /// <summary>
@@ -8,13 +11,19 @@ namespace HarperDBStudioMobile.Models
     /// </summary>
     public partial class GetPrepaidSubscriptionModel
 {
+        [JsonProperty("body")]
         public GetPrepaidSubscriptionBasicAuthBody Body { get; set; }
     }
 
     public partial class GetPrepaidSubscriptionBasicAuthBody
     {
-        public object[] CloudCompute { get; set; }
-        public object[] CloudStorage { get; set; }
-        public object[] LocalCompute { get; set; }
+        [JsonProperty("cloud_compute")]
+        public List<object> CloudCompute { get; set; }
+
+        [JsonProperty("cloud_storage")]
+        public List<object> CloudStorage { get; set; }
+
+        [JsonProperty("local_compute")]
+        public List<object> LocalCompute { get; set; }
     }
 }

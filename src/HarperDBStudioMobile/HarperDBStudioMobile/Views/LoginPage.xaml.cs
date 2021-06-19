@@ -23,7 +23,6 @@ namespace HarperDBStudioMobile.Views
         public LoginPage()
         {
             InitializeComponent();
-            //FlyoutBehavior.Disabled = true;
             Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
             this.requestGetUserModel = new RequestGetUserModel();
             user_email.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
@@ -31,7 +30,6 @@ namespace HarperDBStudioMobile.Views
 
             user_email.Text = "";
             user_password.Text = "";
-            //this.BindingContext = new LoginViewModel();
         }
 
         private async void Button_Clicked(System.Object sender, System.EventArgs e)
@@ -49,11 +47,22 @@ namespace HarperDBStudioMobile.Views
             try
             {
                 var loginInfo = await restClient.GetUser(requestGetUserModel);
-                if (loginInfo != null && loginInfo.IsSuccessStatusCode && loginInfo.Content.Body != null && loginInfo.Content.Body.UserId != null)
+                if (loginInfo != null && loginInfo.IsSuccessStatusCode && loginInfo.Content.Body != null && loginInfo.Content.Body.user_id != null)
                 {
                     //Success
-                    await DisplayAlert("Success", "You've Logged in " + loginInfo.Content.Body.Firstname, "OK");
-                    await Shell.Current.GoToAsync($"{nameof(AboutPage)}");
+                    LoggedInUser.Firstname = loginInfo.Content.Body.firstname;
+                    LoggedInUser.Lastname = loginInfo.Content.Body.lastname;
+                    LoggedInUser.Email = loginInfo.Content.Body.email;
+                    LoggedInUser.UserId = loginInfo.Content.Body.user_id;
+                    LoggedInUser.PrimaryCustomerId = loginInfo.Content.Body.primary_customer_id;
+                    LoggedInUser.EmailBounced = loginInfo.Content.Body.email_bounced;
+                    LoggedInUser.UpdatePassword = loginInfo.Content.Body.update_password;
+                    LoggedInUser.GithubRepo = loginInfo.Content.Body.github_repo;
+                    LoggedInUser.LastLogin = loginInfo.Content.Body.last_login;
+                    LoggedInUser.Orgs = loginInfo.Content.Body.orgs;
+
+                    await DisplayAlert("Success", "You've Logged in " + loginInfo.Content.Body.firstname, "OK");
+                    await Shell.Current.GoToAsync($"{nameof(Organizations)}");
                 }
                 else
                 {

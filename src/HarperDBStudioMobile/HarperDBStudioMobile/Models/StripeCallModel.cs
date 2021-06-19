@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace HarperDBStudioMobile.Models
 {
     /// <summary>
@@ -8,8 +10,13 @@ namespace HarperDBStudioMobile.Models
     /// </summary>
     public partial class StripeCallModel
     {
+        [JsonProperty("muid")]
         public string Muid { get; set; }
+
+        [JsonProperty("guid")]
         public string Guid { get; set; }
+
+        [JsonProperty("sid")]
         public string Sid { get; set; }
     }
 }

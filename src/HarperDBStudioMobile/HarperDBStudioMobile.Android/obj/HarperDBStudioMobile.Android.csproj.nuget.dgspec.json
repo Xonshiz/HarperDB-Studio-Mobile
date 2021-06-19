@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[6.0.38, )"
             },
+            "Refit.Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[6.0.38, )"
+            },
             "Xamarin.Essentials": {
               "target": "Package",
               "version": "[1.6.1, )"
@@ -101,6 +105,10 @@
               "version": "[13.0.1, )"
             },
             "Refit": {
+              "target": "Package",
+              "version": "[6.0.38, )"
+            },
+            "Refit.Newtonsoft.Json": {
               "target": "Package",
               "version": "[6.0.38, )"
             },

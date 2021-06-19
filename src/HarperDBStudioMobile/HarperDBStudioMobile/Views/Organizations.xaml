@@ -13,7 +13,34 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        
-    </Grid>
+    <CarouselView x:Name="MainCarousel">
+    <CarouselView.ItemTemplate>
+        <DataTemplate>
+            <StackLayout>
+                <Frame HasShadow="True"
+                       BorderColor="DarkGray"
+                       CornerRadius="5"
+                       Margin="20"
+                       HeightRequest="300"
+                       HorizontalOptions="Center"
+                       VerticalOptions="CenterAndExpand">
+                    <StackLayout>
+                        <Label Text="{Binding customer_name}"
+                               FontAttributes="Bold"
+                               FontSize="Large"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding owner_user_id}"
+                               HorizontalOptions="Center" />
+                        <Label Text="{Binding free_cloud_instance_count}"
+                               FontAttributes="Italic"
+                               HorizontalOptions="Center"
+                               MaxLines="5"
+                               LineBreakMode="TailTruncation" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </DataTemplate>
+    </CarouselView.ItemTemplate>
+</CarouselView>
 </ContentPage>

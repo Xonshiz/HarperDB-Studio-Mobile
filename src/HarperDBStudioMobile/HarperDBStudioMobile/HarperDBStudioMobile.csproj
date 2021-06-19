@@ -10,6 +10,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Refit" Version="6.0.38" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="6.0.38" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\SignUpPage.xaml.cs">
@@ -33,6 +34,7 @@
     <None Remove="Refit" />
     <None Remove="Interfaces\" />
     <None Remove="Newtonsoft.Json" />
+    <None Remove="Refit.Newtonsoft.Json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />

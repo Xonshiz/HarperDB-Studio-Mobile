@@ -1,5 +1,9 @@
 ﻿using HarperDBStudioMobile.ViewModels;
 using HarperDBStudioMobile.Views;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using Refit;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
@@ -14,6 +18,7 @@ namespace HarperDBStudioMobile
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(AboutPage), typeof(AboutPage));
+            Routing.RegisterRoute(nameof(Organizations), typeof(Organizations));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
