@@ -12,8 +12,14 @@
             <Color x:Key="Accent">#96d1ff</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
-
-    <CarouselView x:Name="InstanceCarousel">
+    <StackLayout x:Name="mainStackLayout">
+        <StackLayout x:Name="InstanceLoginStackLayout" IsVisible="False">
+            <Entry x:Name="instance_username" />
+            <Entry x:Name="instance_password" IsPassword="True" />
+            <Button x:Name="instance_submit_button" Text="Submit" Clicked="instance_submit_button_Clicked" />
+            <Button x:Name="instance_cancel_button" Text="Cancel" Clicked="instance_cancel_button_Clicked" />
+        </StackLayout>
+        <CarouselView x:Name="InstanceCarousel" PositionChanged="InstanceCarousel_PositionChanged">
         <CarouselView.ItemTemplate>
             <DataTemplate>
                 <StackLayout>
@@ -28,7 +34,8 @@
                             HorizontalOptions="Center"
                             VerticalOptions="CenterAndExpand">
                         <StackLayout>
-                            <Label Text="{Binding rule_arn}"
+                            <StackLayout>
+                                <Label Text="{Binding rule_arn}"
                                     FontAttributes="Bold"
                                     FontSize="Large"
                                     HorizontalOptions="Center"
@@ -40,10 +47,12 @@
                                     HorizontalOptions="Center"
                                     MaxLines="5"
                                     LineBreakMode="TailTruncation" />
+                            </StackLayout>
                         </StackLayout>
                     </Frame>
                 </StackLayout>
             </DataTemplate>
         </CarouselView.ItemTemplate>
     </CarouselView>
+    </StackLayout>
 </ContentPage>

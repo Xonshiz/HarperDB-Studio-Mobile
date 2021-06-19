@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace HarperDBStudioMobile.Models
 {
     /// <summary>
@@ -7,25 +9,44 @@ namespace HarperDBStudioMobile.Models
     /// POST https://xontest-xonshiztestor.harperdbcloud.com/
     /// </summary>
     public partial class GetRolesInstanceModel
-{
-        public long Createdtime { get; set; }
-        public long Updatedtime { get; set; }
-        public bool Active { get; set; }
-        public Role Role { get; set; }
-        public string Username { get; set; }
+    {
+        [JsonProperty("__createdtime__")]
+        public long __createdtime__ { get; set; }
+
+        [JsonProperty("__updatedtime__")]
+        public long __updatedtime__ { get; set; }
+
+        [JsonProperty("active")]
+        public bool active { get; set; }
+
+        [JsonProperty("role")]
+        public Role role { get; set; }
+
+        [JsonProperty("username")]
+        public string username { get; set; }
     }
 
     public partial class Role
     {
-        public long Createdtime { get; set; }
-        public long Updatedtime { get; set; }
-        public Guid Id { get; set; }
-        public RolePermission Permission { get; set; }
-        public string RoleRole { get; set; }
+        [JsonProperty("__createdtime__")]
+        public long __createdtime__ { get; set; }
+
+        [JsonProperty("__updatedtime__")]
+        public long __updatedtime__ { get; set; }
+
+        [JsonProperty("id")]
+        public string id { get; set; }
+
+        [JsonProperty("permission")]
+        public RolePermission permission { get; set; }
+
+        [JsonProperty("role")]
+        public string role { get; set; }
     }
 
     public partial class RolePermission
     {
-        public bool SuperUser { get; set; }
+        [JsonProperty("super_user")]
+        public bool super_user { get; set; }
     }
 }

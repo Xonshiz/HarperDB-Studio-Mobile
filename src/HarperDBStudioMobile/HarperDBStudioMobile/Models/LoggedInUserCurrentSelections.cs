@@ -5,5 +5,6 @@ namespace HarperDBStudioMobile.Models
     {
         public static string current_instance_auth { get; set; }
         public static string current_organization_customer_id { get; set; }
+        public static string INSTANCE_BASE_URL { get; set; }
     }
 }

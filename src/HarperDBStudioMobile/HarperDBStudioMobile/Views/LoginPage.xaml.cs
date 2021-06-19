@@ -29,7 +29,8 @@ namespace HarperDBStudioMobile.Views
             user_email.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
             user_password.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
 
-            
+            user_email.Text = Utils.Utils.base_username;
+            user_password.Text = Utils.Utils.base_password;
         }
 
         private async void Button_Clicked(System.Object sender, System.EventArgs e)
@@ -49,10 +50,7 @@ namespace HarperDBStudioMobile.Views
                 if (loginInfo != null && loginInfo.IsSuccessStatusCode && loginInfo.Content.Body != null && loginInfo.Content.Body.user_id != null)
                 {
                     //Success
-                    var authData = string.Format("{0}:{1}", user_email.Text, user_password.Text);
-                    var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-                    //LoggedInUser.BaseAuth = "Basic " + authHeaderValue;
-                    LoggedInUser.BaseAuth = $"Basic {authHeaderValue}";
+                    LoggedInUser.BaseAuth = Utils.Utils.GetBasicAuthString(user_email.Text, user_password.Text);
                     LoggedInUser.Firstname = loginInfo.Content.Body.firstname;
                     LoggedInUser.Lastname = loginInfo.Content.Body.lastname;
                     LoggedInUser.Email = loginInfo.Content.Body.email;
@@ -78,8 +76,6 @@ namespace HarperDBStudioMobile.Views
                 await DisplayAlert("Failure", ex.Message, "OK");
                 return;
             }
-            
-            //await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
         }
     }
 }

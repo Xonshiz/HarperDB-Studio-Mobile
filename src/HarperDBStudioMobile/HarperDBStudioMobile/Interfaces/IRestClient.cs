@@ -36,5 +36,8 @@ namespace HarperDBStudioMobile.Interfaces
 
         [Post("/addError")]
         Task<AddErrorModel> AddError([Body] RequestAddErrorModel body);
+
+        [Post("/")]
+        Task<ApiResponse<GetRolesInstanceModel>> VerifyInstanceLogin([Header("Authorization")] string authString, [Body] RequestOperationsModel body);
     }
 }
