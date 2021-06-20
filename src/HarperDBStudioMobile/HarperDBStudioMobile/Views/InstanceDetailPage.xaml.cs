@@ -19,6 +19,7 @@ namespace HarperDBStudioMobile.Views
         ObservableCollection<string> _schemaTableList = new ObservableCollection<string>();
         Dictionary<string, Dictionary<string, InstanceSchema>> instanceSchemaDict = new Dictionary<string, Dictionary<string, InstanceSchema>>() { };
         RequestSqlActionModel requestSqlActionModel = new RequestSqlActionModel();
+        List<string> attributes = new List<string>();
         Dictionary<string, string> currentTableData = new Dictionary<string, string>() { };
 
         private int _currentSelectedSchema, _currentSelectedTable;
@@ -121,27 +122,18 @@ namespace HarperDBStudioMobile.Views
                 var instanceSchemaTableData = await instanceSchemaClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, requestSqlActionModel);
                 if (instanceSchemaTableData != null && instanceSchemaTableData.IsSuccessStatusCode && instanceSchemaTableData.Content != null)
                 {
-                    //dynamic dynObject = new ExpandoObject();
-                    var attributes = instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].attributes;
-                    //foreach (var attribute in attributes)
-                    //{
-                    //    dynObject[attribute] = "";
-                    //}
-                    //string tempText = instanceSchemaTableData.Content.ToString().Replace("\\\"", "\"");
-                    var jobj = Newtonsoft.Json.Linq.JArray.Parse(instanceSchemaTableData.Content.ToString());
-                    //var data = jobj;
-                    foreach (var item in jobj)
+                    foreach (var attribute in instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].attributes)
                     {
-                        var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.First.ToString());
-                        var path = item.Path;
-                        var first = item.First;
-                        var val = first.SelectTokens("name");
-                        var _jobj = Newtonsoft.Json.Linq.JObject.Parse(item.First.ToString());
-                        foreach (var dataRow in _jobj)
+                        attributes.Add(attribute.attribute.ToString());
+                    }
+                    var _jobj = Newtonsoft.Json.Linq.JArray.Parse(instanceSchemaTableData.Content.ToString());
+                    foreach (var item in _jobj)
+                    {
+                        var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
+                        foreach (var dataRow in parsedString)
                         {
-                            //currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+                            currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
                         }
-                        //currentTableData.Add();
                     }
                 }
                 else
@@ -155,22 +147,4 @@ namespace HarperDBStudioMobile.Views
             }
         }
     }
-}
-
-public partial class TableData
-{
-    [JsonProperty("__updatedtime__")]
-    public long Updatedtime { get; set; }
-
-    [JsonProperty("name")]
-    public string Name { get; set; }
-
-    [JsonProperty("__createdtime__")]
-    public long Createdtime { get; set; }
-
-    [JsonProperty("email")]
-    public string Email { get; set; }
-
-    [JsonProperty("recId")]
-    public Guid RecId { get; set; }
 }
