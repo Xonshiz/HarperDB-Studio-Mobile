@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HarperDBStudioMobile.Utils
@@ -41,6 +43,7 @@ namespace HarperDBStudioMobile.Utils
             var authData = string.Format("{0}:{1}", username, password);
             return $"Basic {Convert.ToBase64String(Encoding.UTF8.GetBytes(authData))}";
         }
+
 
         public static string base_username = "";
         public static string base_password = "";

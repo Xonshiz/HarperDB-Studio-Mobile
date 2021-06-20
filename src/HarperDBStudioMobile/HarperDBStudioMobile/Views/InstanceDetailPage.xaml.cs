@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
+using System.Windows.Input;
 using HarperDBStudioMobile.Interfaces;
 using HarperDBStudioMobile.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Refit;
 using Xamarin.Forms;
+using Xamarin.Forms.DataGrid;
 
 namespace HarperDBStudioMobile.Views
 {
     public partial class InstanceDetailPage : ContentPage
     {
+        private bool _isRefreshing;
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
         ObservableCollection<string> _schemaList = new ObservableCollection<string>();
         ObservableCollection<string> _schemaTableList = new ObservableCollection<string>();
@@ -21,13 +25,53 @@ namespace HarperDBStudioMobile.Views
         RequestSqlActionModel requestSqlActionModel = new RequestSqlActionModel();
         List<string> attributes = new List<string>();
         Dictionary<string, string> currentTableData = new Dictionary<string, string>() { };
+        List<Dictionary<string, string>> currentTableDataList = new List<Dictionary<string, string>>() { };
+        List<Dictionary<string, string>> _currentTableDataList = new List<Dictionary<string, string>>() { };
 
         private int _currentSelectedSchema, _currentSelectedTable;
         private int _offset = 0;
 
+        public Dictionary<string, string> SelectedRow
+        {
+            get
+            {
+                return currentTableData;
+            }
+            set
+            {
+                currentTableData = value;
+                OnPropertyChanged(nameof(SelectedRow));
+            }
+        }
+
+        public bool IsRefreshing
+        {
+            get
+            {
+                return _isRefreshing;
+            }
+            set
+            {
+                _isRefreshing = value;
+                OnPropertyChanged(nameof(IsRefreshing));
+            }
+        }
+
+        //public ICommand RefreshCommand { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+        }
+
+
         public InstanceDetailPage()
         {
             InitializeComponent();
+            //mainDataGrid.ItemsSource = currentTableData;
             schemaPicker.ItemsSource = _schemaList;
             tablePicker.ItemsSource = _schemaTableList;
             this.GetSchemaDetails();
@@ -103,6 +147,38 @@ namespace HarperDBStudioMobile.Views
             }
         }
 
+        private void PopulateDataGrid()
+        {
+            ColumnCollection colCollection = new ColumnCollection();
+            foreach (var columnName in currentTableDataList[0])
+            {
+                colCollection.Add(new DataGridColumn()
+                {
+                    FormattedTitle = new FormattedString()
+                    {
+                        Spans =
+                        {
+                            new Span() { Text = columnName.Key, FontSize = 13, TextColor = Color.Black, FontAttributes = FontAttributes.Bold }
+                        }
+                    },
+                    PropertyName = columnName.Key,
+                    Width = GridLength.Star
+                });
+            }
+
+            var students = new[] {
+                new { __updatedtime__ = 1, recId = "James", email = "Bond", name = "dddd", __createdtime__ = "asdasd" }
+            };
+            //var intToAnon = currentTableData.ToDictionary(e => e.Key, e => new { e.Key, e.Value });
+            var someStuff = JsonConvert.SerializeObject(currentTableDataList);
+            var x = JsonConvert.DeserializeObject(someStuff);
+            //object result = new JavaScriptSerializer().DeserializeObject(someStuff);
+
+            //keyValuePair.Clear();
+            mainDataGrid.Columns = colCollection;
+            mainDataGrid.ItemsSource = someStuff;
+        }
+
         async void tablePicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             var picker = (Picker)sender;
@@ -127,14 +203,23 @@ namespace HarperDBStudioMobile.Views
                         attributes.Add(attribute.attribute.ToString());
                     }
                     var _jobj = Newtonsoft.Json.Linq.JArray.Parse(instanceSchemaTableData.Content.ToString());
+
                     foreach (var item in _jobj)
                     {
                         var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
+                        Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
                         foreach (var dataRow in parsedString)
                         {
-                            currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+                            _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+                            
                         }
+                        _currentTableDataList.Add(_currentTableData);
                     }
+
+                    //currentTableData.Clear();
+                    currentTableDataList.Clear();
+                    currentTableDataList = _currentTableDataList;
+                    this.PopulateDataGrid();
                 }
                 else
                 {

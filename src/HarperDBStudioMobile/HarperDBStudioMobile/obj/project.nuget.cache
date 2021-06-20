@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "92r2kp332kzz68/YGhheAB1KyyhpIoCMNoXgiDv94gnX32dCi3mJ70HTeST3sQ3P0MxQNEAMsTcbCpBzBGwRzg==",
+  "dgSpecHash": "0AgnpACQcpo6/yEBgboqUMtArRXsw0bDBEYHftqCDY+iY2ugBMQ2cnBKhPzt0TMoGjdoGRNMEJfGTYMIyTpIKQ==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile/HarperDBStudioMobile.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,8 @@
     "/Users/xonshiz/.nuget/packages/system.text.json/5.0.1/system.text.json.5.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512"
+    "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/xamarin.forms.datagrid/4.8.0/xamarin.forms.datagrid.4.8.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -254,6 +254,18 @@
           "buildTransitive/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.DataGrid/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "4.8.0.1687"
+        },
+        "compile": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        }
+      },
       "HarperDBStudioMobile/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -262,7 +274,8 @@
           "Refit": "6.0.38",
           "Refit.Newtonsoft.Json": "6.0.38",
           "Xamarin.Essentials": "1.6.1",
-          "Xamarin.Forms": "5.0.0.2012"
+          "Xamarin.Forms": "5.0.0.2012",
+          "Xamarin.Forms.DataGrid": "4.8.0"
         },
         "compile": {
           "bin/placeholder/HarperDBStudioMobile.dll": {}
@@ -525,6 +538,18 @@
           "buildTransitive/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.DataGrid/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "4.8.0.1687"
+        },
+        "compile": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        }
+      },
       "HarperDBStudioMobile/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -533,7 +558,8 @@
           "Refit": "6.0.38",
           "Refit.Newtonsoft.Json": "6.0.38",
           "Xamarin.Essentials": "1.6.1",
-          "Xamarin.Forms": "5.0.0.2012"
+          "Xamarin.Forms": "5.0.0.2012",
+          "Xamarin.Forms.DataGrid": "4.8.0"
         },
         "compile": {
           "bin/placeholder/HarperDBStudioMobile.dll": {}
@@ -796,6 +822,18 @@
           "buildTransitive/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.DataGrid/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "4.8.0.1687"
+        },
+        "compile": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        }
+      },
       "HarperDBStudioMobile/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -804,7 +842,8 @@
           "Refit": "6.0.38",
           "Refit.Newtonsoft.Json": "6.0.38",
           "Xamarin.Essentials": "1.6.1",
-          "Xamarin.Forms": "5.0.0.2012"
+          "Xamarin.Forms": "5.0.0.2012",
+          "Xamarin.Forms.DataGrid": "4.8.0"
         },
         "compile": {
           "bin/placeholder/HarperDBStudioMobile.dll": {}
@@ -1067,6 +1106,18 @@
           "buildTransitive/Xamarin.Forms.targets": {}
         }
       },
+      "Xamarin.Forms.DataGrid/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "4.8.0.1687"
+        },
+        "compile": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll": {}
+        }
+      },
       "HarperDBStudioMobile/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
@@ -1075,7 +1126,8 @@
           "Refit": "6.0.38",
           "Refit.Newtonsoft.Json": "6.0.38",
           "Xamarin.Essentials": "1.6.1",
-          "Xamarin.Forms": "5.0.0.2012"
+          "Xamarin.Forms": "5.0.0.2012",
+          "Xamarin.Forms.DataGrid": "4.8.0"
         },
         "compile": {
           "bin/placeholder/HarperDBStudioMobile.dll": {}
@@ -1627,6 +1679,18 @@
         "xamarin.forms.nuspec"
       ]
     },
+    "Xamarin.Forms.DataGrid/4.8.0": {
+      "sha512": "aWVJQ2W5FKrmJgmt8aBhH1RumvUycM89vL0+JlTril+4QciUwerNCr9FV62jBeEXBp6/VUF4XX+9MfJtzjPWjQ==",
+      "type": "package",
+      "path": "xamarin.forms.datagrid/4.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Xamarin.Forms.DataGrid.dll",
+        "xamarin.forms.datagrid.4.8.0.nupkg.sha512",
+        "xamarin.forms.datagrid.nuspec"
+      ]
+    },
     "HarperDBStudioMobile/1.0.0": {
       "type": "project",
       "path": "../HarperDBStudioMobile/HarperDBStudioMobile.csproj",
@@ -1640,7 +1704,8 @@
       "Refit >= 6.0.38",
       "Refit.Newtonsoft.Json >= 6.0.38",
       "Xamarin.Essentials >= 1.6.1",
-      "Xamarin.Forms >= 5.0.0.2012"
+      "Xamarin.Forms >= 5.0.0.2012",
+      "Xamarin.Forms.DataGrid >= 4.8.0"
     ]
   },
   "packageFolders": {
@@ -1697,6 +1762,10 @@
           "Xamarin.Forms": {
             "target": "Package",
             "version": "[5.0.0.2012, )"
+          },
+          "Xamarin.Forms.DataGrid": {
+            "target": "Package",
+            "version": "[4.8.0, )"
           }
         }
       }

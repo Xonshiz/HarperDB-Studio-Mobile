@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sJeSjznl0viWof3WvAgGwVSIxoLwbVAlO5oGtWQ+vIDHPR8qiKNB1fJbtmaT9aliVhLs+0NOAYHwJx4bCFSHKQ==",
+  "dgSpecHash": "J/v5GDrpJogh8VH1fBE4n84wV55cPpw+3oeq5ygOs3YTUS+j6rr/xhWR+ixYdWbcuZZ/07w36KRyFffqlavoAw==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile.Android/HarperDBStudioMobile.Android.csproj",
   "expectedPackageFiles": [
@@ -60,6 +60,7 @@
     "/Users/xonshiz/.nuget/packages/xamarin.androidx.viewpager2/1.0.0.8/xamarin.androidx.viewpager2.1.0.0.8.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/xamarin.forms.datagrid/4.8.0/xamarin.forms.datagrid.4.8.0.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.google.android.material/1.2.1.1/xamarin.google.android.material.1.2.1.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.google.guava.listenablefuture/1.0.0.2/xamarin.google.guava.listenablefuture.1.0.0.2.nupkg.sha512"
   ],
