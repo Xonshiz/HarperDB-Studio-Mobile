@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "92r2kp332kzz68/YGhheAB1KyyhpIoCMNoXgiDv94gnX32dCi3mJ70HTeST3sQ3P0MxQNEAMsTcbCpBzBGwRzg==",
+  "dgSpecHash": "o5vS0vXPtigpkmwDTKO1/5PXp6DEXv/FniPPX7PTc7V0yD5OMFdedSk2gZyg7SwINeTEboQkuEfqs788U8u1nQ==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile/HarperDBStudioMobile.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,12 @@
     "/Users/xonshiz/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/refit/6.0.38/refit.6.0.38.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/refit.newtonsoft.json/6.0.38/refit.newtonsoft.json.6.0.38.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/syncfusion.licensing/19.1.0.69/syncfusion.licensing.19.1.0.69.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.core/19.1.0.69/syncfusion.xamarin.core.19.1.0.69.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.gridcommon/19.1.0.69/syncfusion.xamarin.gridcommon.19.1.0.69.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.sfcombobox/19.1.0.69/syncfusion.xamarin.sfcombobox.19.1.0.69.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.sfdatagrid/19.1.0.69/syncfusion.xamarin.sfdatagrid.19.1.0.69.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.sfnumerictextbox/19.1.0.69/syncfusion.xamarin.sfnumerictextbox.19.1.0.69.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.net.http.json/5.0.0/system.net.http.json.5.0.0.nupkg.sha512",
@@ -19,7 +25,8 @@
     "/Users/xonshiz/.nuget/packages/system.text.json/5.0.1/system.text.json.5.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512"
+    "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512",
+    "/Users/xonshiz/.nuget/packages/xamarin.forms.datagrid/4.8.0/xamarin.forms.datagrid.4.8.0.nupkg.sha512"
   ],
   "logs": []
 }

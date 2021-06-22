@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
     x:Class="HarperDBStudioMobile.Views.InstanceDetailPage">
-    <StackLayout>
+    <StackLayout VerticalOptions="FillAndExpand">
         <Picker x:Name="schemaPicker"
                 Title="Select a Schema"
                 TitleColor="Red"
@@ -14,5 +14,13 @@
                 TitleColor="Black"
                 SelectedIndexChanged="tablePicker_SelectedIndexChanged">
         </Picker>
+
+        <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <ScrollView Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout x:Name="gridStackLayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+                </StackLayout>
+            </ScrollView>
+        </Frame>
     </StackLayout>
 </ContentPage>

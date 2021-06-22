@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
+using System.Windows.Input;
 using HarperDBStudioMobile.Interfaces;
 using HarperDBStudioMobile.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Refit;
+using Syncfusion.SfDataGrid.XForms;
 using Xamarin.Forms;
+using Xamarin.Forms.DataGrid;
 
 namespace HarperDBStudioMobile.Views
 {
     public partial class InstanceDetailPage : ContentPage
     {
+        private bool _isRefreshing;
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
         ObservableCollection<string> _schemaList = new ObservableCollection<string>();
         ObservableCollection<string> _schemaTableList = new ObservableCollection<string>();
@@ -21,6 +26,8 @@ namespace HarperDBStudioMobile.Views
         RequestSqlActionModel requestSqlActionModel = new RequestSqlActionModel();
         List<string> attributes = new List<string>();
         Dictionary<string, string> currentTableData = new Dictionary<string, string>() { };
+        List<Dictionary<string, string>> currentTableDataList = new List<Dictionary<string, string>>() { };
+        List<Dictionary<string, string>> _currentTableDataList = new List<Dictionary<string, string>>() { };
 
         private int _currentSelectedSchema, _currentSelectedTable;
         private int _offset = 0;
@@ -103,6 +110,14 @@ namespace HarperDBStudioMobile.Views
             }
         }
 
+        private void GenerateGridColumns()
+        {
+            foreach (Dictionary<string, string> item in currentTableDataList)
+            {
+                gridStackLayout.Children.Add(new ScrollingGridView(item));
+            }
+        }
+
         async void tablePicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             var picker = (Picker)sender;
@@ -122,19 +137,30 @@ namespace HarperDBStudioMobile.Views
                 var instanceSchemaTableData = await instanceSchemaClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, requestSqlActionModel);
                 if (instanceSchemaTableData != null && instanceSchemaTableData.IsSuccessStatusCode && instanceSchemaTableData.Content != null)
                 {
+                    attributes.Clear();
                     foreach (var attribute in instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].attributes)
                     {
                         attributes.Add(attribute.attribute.ToString());
                     }
+
                     var _jobj = Newtonsoft.Json.Linq.JArray.Parse(instanceSchemaTableData.Content.ToString());
+
                     foreach (var item in _jobj)
                     {
                         var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
+                        Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
                         foreach (var dataRow in parsedString)
                         {
-                            currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+                            _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+
                         }
+                        _currentTableDataList.Add(_currentTableData);
                     }
+
+                    currentTableDataList.Clear();
+                    currentTableDataList = _currentTableDataList;
+                    this.GenerateGridColumns();
+                    //this.PopulateDataGrid();
                 }
                 else
                 {

@@ -11,6 +11,7 @@ namespace HarperDBStudioMobile
 
         public App()
         {
+            Xamarin.Forms.DataGrid.DataGridComponent.Init();
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
