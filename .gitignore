@@ -8,3 +8,5 @@ src/HarperDBStudioMobile/HarperDBStudioMobile.UWP/bin/*
 src/HarperDBStudioMobile/HarperDBStudioMobile.UWP/obj/*
 src/HarperDBStudioMobile/HarperDBStudioMobile/bin/*
 src/HarperDBStudioMobile/HarperDBStudioMobile/obj/*
+src/HarperDBStudioMobile/HarperDBStudioMobile/Utils/DummyDataClass.cs
+src/HarperDBStudioMobile/HarperDBStudioMobile/Utils/DummyDataClass.cs

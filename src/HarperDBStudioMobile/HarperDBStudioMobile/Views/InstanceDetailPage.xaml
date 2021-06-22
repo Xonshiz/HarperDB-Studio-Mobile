@@ -15,12 +15,8 @@
                 SelectedIndexChanged="tablePicker_SelectedIndexChanged">
         </Picker>
 
-        <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <ScrollView Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                <StackLayout x:Name="gridStackLayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout x:Name="gridStackLayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-                </StackLayout>
-            </ScrollView>
-        </Frame>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

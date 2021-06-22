@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using HarperDBStudioMobile.Interfaces;
 using HarperDBStudioMobile.Models;
@@ -19,11 +21,13 @@ namespace HarperDBStudioMobile.Views
     public partial class InstanceDetailPage : ContentPage
     {
         private bool _isRefreshing;
+        private string hashAttribute = String.Empty;
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
         ObservableCollection<string> _schemaList = new ObservableCollection<string>();
         ObservableCollection<string> _schemaTableList = new ObservableCollection<string>();
         Dictionary<string, Dictionary<string, InstanceSchema>> instanceSchemaDict = new Dictionary<string, Dictionary<string, InstanceSchema>>() { };
         RequestSqlActionModel requestSqlActionModel = new RequestSqlActionModel();
+        RequestDescribeTableModel requestDescribeTableModel = new RequestDescribeTableModel();
         List<string> attributes = new List<string>();
         Dictionary<string, string> currentTableData = new Dictionary<string, string>() { };
         List<Dictionary<string, string>> currentTableDataList = new List<Dictionary<string, string>>() { };
@@ -114,8 +118,16 @@ namespace HarperDBStudioMobile.Views
         {
             foreach (Dictionary<string, string> item in currentTableDataList)
             {
-                gridStackLayout.Children.Add(new ScrollingGridView(item));
+                ScrollingGridView scrollingGridView = new ScrollingGridView(item, this.hashAttribute);
+                gridStackLayout.Children.Add(scrollingGridView);
+                scrollingGridView.GridRowTapped += ScrollingGridView_GridRowTapped;
             }
+        }
+
+        private async void ScrollingGridView_GridRowTapped(object sender, RowTappedEventArgs e)
+        {
+            //string hashValue = e.hashValue;
+            await DisplayAlert("Hash Value", e.hashValue.ToString(), "Ok");
         }
 
         async void tablePicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
@@ -127,6 +139,8 @@ namespace HarperDBStudioMobile.Views
                 return;
 
             this._currentSelectedTable = selectedIndex;
+
+            await this.DescribeTable();
 
             requestSqlActionModel.operation = Utils.Utils.INSTANCE_OPERATIONS.sql.ToString();
             //SELECT * FROM `newSchema`.`newTable`  OFFSET 0 FETCH 20
@@ -170,6 +184,57 @@ namespace HarperDBStudioMobile.Views
             catch (Exception ex)
             {
                 await DisplayAlert("Error!", ex.Message, "OK");
+            }
+        }
+
+        async Task<bool> DescribeTable()
+        {
+            requestDescribeTableModel.operation = Utils.Utils.INSTANCE_OPERATIONS.describe_table.ToString();
+            requestDescribeTableModel.schema = this._schemaList[_currentSelectedSchema];
+            requestDescribeTableModel.table = this._schemaTableList[_currentSelectedTable];
+            var instanceSchemaClient = RestService.For<IGenericRestClient<string, RequestDescribeTableModel>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
+            try
+            {
+                var instanceSchema = await instanceSchemaClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, requestDescribeTableModel);
+                if (instanceSchema != null && instanceSchema.IsSuccessStatusCode && instanceSchema.Content != null)
+                {
+                    var match = Regex.Match(instanceSchema.Content.ToString(), "\"hash_attribute\":\"(.*?)\"", RegexOptions.IgnoreCase);
+                    if (match.Success)
+                    {
+                        this.hashAttribute = match.Groups[1].Value.ToString();
+                        return true;
+                    } else
+                    {
+                        return false;
+                    }
+                    //var jobj = Newtonsoft.Json.Linq.JObject.Parse(instanceSchema.Content.ToString());
+                    //foreach (JContainer child in jobj.Children())
+                    //{
+                    //    string FirstChild = child.First.ToString();
+                    //    if (child.First.ToString().StartsWith("["))
+                    //    {
+                    //        continue;
+                    //    }
+                    //    Dictionary<string, InstanceSchema> keyValuePairs = new Dictionary<string, InstanceSchema>() { };
+                    //    var _jobj = Newtonsoft.Json.Linq.JObject.Parse(child.First.ToString());
+                    //    foreach (var innerChild in _jobj)
+                    //    {
+                    //        keyValuePairs.Add(innerChild.Key.ToString(), innerChild.Value.ToObject<InstanceSchema>());
+                    //    }
+                    //    //instanceSchemaDict.Add(child.Path, keyValuePairs);
+                    //}
+                    //this.PopulateSchemaPicker();
+                }
+                else
+                {
+                    await DisplayAlert("Error!", "Wrong Login Info?", "OK");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error!", ex.Message, "OK");
+                return false;
             }
         }
     }
