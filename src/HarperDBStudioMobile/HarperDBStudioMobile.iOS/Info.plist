@@ -21,7 +21,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>12.4</string>
+	<string>12.5</string>
 	<key>CFBundleDisplayName</key>
 	<string>HarperDBStudioMobile</string>
 	<key>CFBundleIdentifier</key>

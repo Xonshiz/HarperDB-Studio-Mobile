@@ -10,6 +10,7 @@ using HarperDBStudioMobile.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Refit;
+using Syncfusion.SfDataGrid.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.DataGrid;
 
@@ -28,50 +29,26 @@ namespace HarperDBStudioMobile.Views
         List<Dictionary<string, string>> currentTableDataList = new List<Dictionary<string, string>>() { };
         List<Dictionary<string, string>> _currentTableDataList = new List<Dictionary<string, string>>() { };
 
+
+        public const string JsonData = "[{\"OrderID\":1,\"EmployeeID\":100,\"FirstName\":'Gina',\"LastName\":'Gable'}," +
+                                       "{\"OrderID\":2,\"EmployeeID\":200,\"FirstName\":'Danielle',\"LastName\":'Rooney'}," +
+                                      "{\"OrderID\":3,\"EmployeeID\":300,\"FirstName\":'Frank',\"LastName\":'Gable'},]";
+        public ObservableCollection<DynamicModel> DynamicCollection { get; set; }
+        public List<Dictionary<string, string>> DynamicJsonCollection { get; set; }
+
         private int _currentSelectedSchema, _currentSelectedTable;
         private int _offset = 0;
 
-        public Dictionary<string, string> SelectedRow
+        private void GridSetup()
         {
-            get
-            {
-                return currentTableData;
-            }
-            set
-            {
-                currentTableData = value;
-                OnPropertyChanged(nameof(SelectedRow));
-            }
+            dataGrid.ColumnSizer = ColumnSizer.Star;
+            dataGrid.ItemsSource = DynamicCollection;
         }
-
-        public bool IsRefreshing
-        {
-            get
-            {
-                return _isRefreshing;
-            }
-            set
-            {
-                _isRefreshing = value;
-                OnPropertyChanged(nameof(IsRefreshing));
-            }
-        }
-
-        //public ICommand RefreshCommand { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-        }
-
 
         public InstanceDetailPage()
         {
             InitializeComponent();
-            //mainDataGrid.ItemsSource = currentTableData;
+            this.GridSetup();
             schemaPicker.ItemsSource = _schemaList;
             tablePicker.ItemsSource = _schemaTableList;
             this.GetSchemaDetails();
@@ -147,36 +124,86 @@ namespace HarperDBStudioMobile.Views
             }
         }
 
-        private void PopulateDataGrid()
+        //private void PopulateDataGrid()
+        //{
+        //    ColumnCollection colCollection = new ColumnCollection();
+        //    foreach (var columnName in currentTableDataList[0])
+        //    {
+        //        colCollection.Add(new DataGridColumn()
+        //        {
+        //            FormattedTitle = new FormattedString()
+        //            {
+        //                Spans =
+        //                {
+        //                    new Span() { Text = columnName.Key, FontSize = 13, TextColor = Color.Black, FontAttributes = FontAttributes.Bold }
+        //                }
+        //            },
+        //            PropertyName = columnName.Key,
+        //            Width = GridLength.Star
+        //        });
+        //    }
+        //}
+
+        private void GenerateGridColumns()
         {
-            ColumnCollection colCollection = new ColumnCollection();
-            foreach (var columnName in currentTableDataList[0])
+
+            dataGrid.Columns.Clear();
+            foreach (string attribute in attributes)
             {
-                colCollection.Add(new DataGridColumn()
+                dataGrid.Columns.Add(new GridTextColumn()
                 {
-                    FormattedTitle = new FormattedString()
-                    {
-                        Spans =
-                        {
-                            new Span() { Text = columnName.Key, FontSize = 13, TextColor = Color.Black, FontAttributes = FontAttributes.Bold }
-                        }
-                    },
-                    PropertyName = columnName.Key,
-                    Width = GridLength.Star
+                    HeaderText = attribute,
+                    MappingName = $"Values[{attribute}]",
+                    LineBreakMode = LineBreakMode.WordWrap,
+                    TextAlignment = TextAlignment.Center,
+                    HeaderTextAlignment = TextAlignment.Center,
                 });
             }
+            //dataGrid.ItemsSource = DynamicCollection;
+            if (dataGrid.ItemsSource == null)
+            {
+                dataGrid.ItemsSource = DynamicCollection;
+            }
 
-            var students = new[] {
-                new { __updatedtime__ = 1, recId = "James", email = "Bond", name = "dddd", __createdtime__ = "asdasd" }
-            };
-            //var intToAnon = currentTableData.ToDictionary(e => e.Key, e => new { e.Key, e.Value });
-            var someStuff = JsonConvert.SerializeObject(currentTableDataList);
-            var x = JsonConvert.DeserializeObject(someStuff);
-            //object result = new JavaScriptSerializer().DeserializeObject(someStuff);
+            //dataGrid.Columns.Clear();
+            //dataGrid.Columns.Add(new GridTextColumn()
+            //{
+            //    HeaderText = "Order ID",
+            //    MappingName = "Values[OrderID]",
+            //    LineBreakMode = LineBreakMode.WordWrap,
+            //    TextAlignment = TextAlignment.Center,
+            //    HeaderTextAlignment = TextAlignment.Center,
+            //});
 
-            //keyValuePair.Clear();
-            mainDataGrid.Columns = colCollection;
-            mainDataGrid.ItemsSource = someStuff;
+            //dataGrid.Columns.Add(new GridTextColumn()
+            //{
+            //    HeaderText = "Customer ID",
+            //    MappingName = "Values[EmployeeID]",
+            //    LineBreakMode = LineBreakMode.WordWrap,
+            //    TextAlignment = TextAlignment.Center,
+            //    HeaderTextAlignment = TextAlignment.Center,
+            //});
+            //dataGrid.ItemsSource = DynamicCollection;
+
+            //DynamicJsonCollection = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(JsonData);
+            //var data = new ObservableCollection<DynamicModel>();
+            //foreach (var item in DynamicJsonCollection)
+            //{
+            //    var obj = new DynamicModel() { Values = item };
+            //    data.Add(obj);
+            //}
+            //DynamicCollection = data;
+        }
+
+        private ObservableCollection<DynamicModel> PopulateData()
+        {
+            var data = new ObservableCollection<DynamicModel>();
+            foreach (var item in DynamicJsonCollection)
+            {
+                var obj = new DynamicModel() { Values = item };
+                data.Add(obj);
+            }
+            return data;
         }
 
         async void tablePicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
@@ -198,28 +225,32 @@ namespace HarperDBStudioMobile.Views
                 var instanceSchemaTableData = await instanceSchemaClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, requestSqlActionModel);
                 if (instanceSchemaTableData != null && instanceSchemaTableData.IsSuccessStatusCode && instanceSchemaTableData.Content != null)
                 {
+                    attributes.Clear();
                     foreach (var attribute in instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].attributes)
                     {
                         attributes.Add(attribute.attribute.ToString());
                     }
-                    var _jobj = Newtonsoft.Json.Linq.JArray.Parse(instanceSchemaTableData.Content.ToString());
+                    this.GenerateGridColumns();
+                    DynamicJsonCollection = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(instanceSchemaTableData.Content.ToString());
+                    DynamicCollection = PopulateData();
 
-                    foreach (var item in _jobj)
-                    {
-                        var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
-                        Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
-                        foreach (var dataRow in parsedString)
-                        {
-                            _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
-                            
-                        }
-                        _currentTableDataList.Add(_currentTableData);
-                    }
+                    //var _jobj = Newtonsoft.Json.Linq.JArray.Parse(instanceSchemaTableData.Content.ToString());
 
-                    //currentTableData.Clear();
-                    currentTableDataList.Clear();
-                    currentTableDataList = _currentTableDataList;
-                    this.PopulateDataGrid();
+                    //foreach (var item in _jobj)
+                    //{
+                    //    var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
+                    //    Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
+                    //    foreach (var dataRow in parsedString)
+                    //    {
+                    //        _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+
+                    //    }
+                    //    _currentTableDataList.Add(_currentTableData);
+                    //}
+
+                    //currentTableDataList.Clear();
+                    //currentTableDataList = _currentTableDataList;
+                    //this.PopulateDataGrid();
                 }
                 else
                 {

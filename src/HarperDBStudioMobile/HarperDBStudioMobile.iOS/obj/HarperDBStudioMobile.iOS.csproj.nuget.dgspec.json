@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[6.0.38, )"
             },
+            "Syncfusion.Xamarin.SfDataGrid": {
+              "target": "Package",
+              "version": "[19.1.0.69, )"
+            },
             "Xamarin.Essentials": {
               "target": "Package",
               "version": "[1.6.1, )"
@@ -126,6 +130,10 @@
             "Refit.Newtonsoft.Json": {
               "target": "Package",
               "version": "[6.0.38, )"
+            },
+            "Syncfusion.Xamarin.SfDataGrid": {
+              "target": "Package",
+              "version": "[19.1.0.69, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",

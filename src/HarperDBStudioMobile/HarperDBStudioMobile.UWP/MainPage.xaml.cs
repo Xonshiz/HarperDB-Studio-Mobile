@@ -21,6 +21,7 @@ namespace HarperDBStudioMobile.UWP
         {
             this.InitializeComponent();
 
+            Syncfusion.SfDataGrid.XForms.UWP.SfDataGridRenderer.Init();
             LoadApplication(new HarperDBStudioMobile.App());
         }
     }

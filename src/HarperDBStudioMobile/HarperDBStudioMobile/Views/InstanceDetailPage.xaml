@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
     x:Class="HarperDBStudioMobile.Views.InstanceDetailPage">
-    <StackLayout>
+    <StackLayout VerticalOptions="FillAndExpand">
         <Picker x:Name="schemaPicker"
                 Title="Select a Schema"
                 TitleColor="Red"
@@ -15,7 +15,16 @@
                 SelectedIndexChanged="tablePicker_SelectedIndexChanged">
         </Picker>
 
-        <dg:DataGrid x:Name="mainDataGrid" 
+        <syncfusion:SfDataGrid x:Name="dataGrid"
+                               AllowSorting="False"
+                               AutoGenerateColumns="False"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               IsVisible="True"
+                               IsEnabled="True">
+        </syncfusion:SfDataGrid>
+
+        <!--<dg:DataGrid x:Name="mainDataGrid" 
                      ItemsSource="{Binding currentTableDataList}"
                      SelectedItem="{Binding SelectedRow}"
                      RowHeight="70"
@@ -45,7 +54,7 @@
                     <Color>Black</Color>
                 </dg:PaletteCollection>
             </dg:DataGrid.RowsTextColorPalette>
-        </dg:DataGrid>
+        </dg:DataGrid>-->
 
     </StackLayout>
 </ContentPage>

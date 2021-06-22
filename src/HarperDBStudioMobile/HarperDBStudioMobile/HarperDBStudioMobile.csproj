@@ -12,6 +12,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Refit.Newtonsoft.Json" Version="6.0.38" />
     <PackageReference Include="Xamarin.Forms.DataGrid" Version="4.8.0" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="19.1.0.69" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\SignUpPage.xaml.cs">
@@ -37,6 +38,7 @@
     <None Remove="Newtonsoft.Json" />
     <None Remove="Refit.Newtonsoft.Json" />
     <None Remove="Xamarin.Forms.DataGrid" />
+    <None Remove="Syncfusion.Xamarin.SfDataGrid" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />
