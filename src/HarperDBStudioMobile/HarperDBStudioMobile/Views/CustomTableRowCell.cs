@@ -32,10 +32,14 @@ namespace HarperDBStudioMobile.Views
             };
 
             StackLayout layout = new StackLayout();
+            layout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            layout.VerticalOptions = LayoutOptions.StartAndExpand;
+            layout.Margin = 0;
+            layout.Padding = 0;
             layout.GestureRecognizers.Add(tapGestureRecognizer);
 
-            layout.Children.Add(new Label { Text = key });
-            layout.Children.Add(new Label { Text = value });
+            layout.Children.Add(new Label { Text = key, Padding = 0, Margin = 0, HorizontalOptions = LayoutOptions.FillAndExpand });
+            layout.Children.Add(new Label { Text = value, Padding = 0, Margin = 0, HorizontalOptions = LayoutOptions.FillAndExpand });
 
             this.BackgroundColor = Color.WhiteSmoke;
             Content = layout;

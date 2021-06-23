@@ -34,6 +34,9 @@ namespace HarperDBStudioMobile.Views
                 }
                 gridView.ColumnDefinitions.Add(new ColumnDefinition());
                 CustomTableRowCell customTableRowCell = new CustomTableRowCell(item.Key, item.Value);
+                customTableRowCell.Margin = 0;
+                customTableRowCell.Padding = 0;
+                customTableRowCell.FlowDirection = FlowDirection.LeftToRight;
 
                 var view = new ContentView
                 {

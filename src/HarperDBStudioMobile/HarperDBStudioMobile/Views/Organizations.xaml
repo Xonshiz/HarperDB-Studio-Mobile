@@ -2,16 +2,7 @@
 <ContentPage x:Name="currentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:HarperDBStudioMobile.ViewModels"
-    x:Class="HarperDBStudioMobile.Views.Organizations">
-    <ContentPage.BindingContext>
-        <vm:OrganizationsViewModel />
-    </ContentPage.BindingContext>
-    
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="Accent">#96d1ff</Color>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+    x:Class="HarperDBStudioMobile.Views.Organizations" BackgroundColor="{StaticResource AppBackgroundColor}">
 
     <CarouselView x:Name="MainCarousel">
     <CarouselView.ItemTemplate>
@@ -21,12 +12,12 @@
                     <TapGestureRecognizer Command="{Binding CarouselItemTapped,Source={x:Reference currentPage}}" CommandParameter="{Binding .}"/>
                 </StackLayout.GestureRecognizers>
                 <Frame HasShadow="True"
-                       BorderColor="DarkGray"
+                       BorderColor="#201d45"
                        CornerRadius="5"
                        Margin="20"
-                       HeightRequest="300"
                        HorizontalOptions="Center"
-                       VerticalOptions="CenterAndExpand">
+                       VerticalOptions="CenterAndExpand"
+                       BackgroundColor="{StaticResource FrameBackgroundColor}">
                     <StackLayout>
                         <Label Text="{Binding customer_name}"
                                FontAttributes="Bold"

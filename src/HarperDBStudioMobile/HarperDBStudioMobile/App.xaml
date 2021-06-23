@@ -7,6 +7,8 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="AppBackgroundColor">#403b8a</Color>
+            <Color x:Key="FrameBackgroundColor">#f9f9f9</Color>
             <Color x:Key="Primary">#2196F3</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>

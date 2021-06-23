@@ -5,12 +5,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="HarperDBStudioMobile.Views.LoginPage"
-             Shell.NavBarIsVisible="False">
-    <ContentPage.Content>
-        <StackLayout x:Name="loginStackLayout" Padding="10,0,10,0" VerticalOptions="Center">
-            <Entry x:Name="user_email" Placeholder="Email"/>
-            <Entry x:Name="user_password"  IsPassword="True" Placeholder="Password" />
-            <Button VerticalOptions="Center" Text="Login" Clicked="Button_Clicked"/>
-        </StackLayout>
-    </ContentPage.Content>
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AppBackgroundColor}">
+    <Frame x:Name="loginFrame"
+           HorizontalOptions="FillAndExpand"
+           Margin="20"
+           Padding="20,40,20,40"
+           VerticalOptions="CenterAndExpand"
+           BackgroundColor="{StaticResource FrameBackgroundColor}">
+            <StackLayout>
+                <Entry x:Name="user_email" Placeholder="Email"/>
+                <Entry x:Name="user_password"  IsPassword="True" Placeholder="Password" />
+                <Button VerticalOptions="Center" Text="Login" Clicked="Button_Clicked" Margin="0,20,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"/>
+            </StackLayout>
+    </Frame>
 </ContentPage>

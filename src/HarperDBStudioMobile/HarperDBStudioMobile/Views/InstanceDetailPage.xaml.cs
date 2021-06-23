@@ -46,6 +46,7 @@ namespace HarperDBStudioMobile.Views
 
         private void PopulateSchemaPicker()
         {
+            _schemaList.Clear();
             foreach (var schema in instanceSchemaDict)
             {
                 _schemaList.Add(schema.Key);
@@ -56,6 +57,7 @@ namespace HarperDBStudioMobile.Views
 
         private void PopulateTablePicker(string currentSchemaName)
         {
+            _schemaTableList.Clear();
             foreach (var table in instanceSchemaDict[currentSchemaName])
             {
                 _schemaTableList.Add(table.Key);
@@ -116,6 +118,7 @@ namespace HarperDBStudioMobile.Views
 
         private void GenerateGridColumns()
         {
+            gridStackLayout.Children.Clear();
             foreach (Dictionary<string, string> item in currentTableDataList)
             {
                 ScrollingGridView scrollingGridView = new ScrollingGridView(item, this.hashAttribute);
@@ -126,7 +129,6 @@ namespace HarperDBStudioMobile.Views
 
         private async void ScrollingGridView_GridRowTapped(object sender, RowTappedEventArgs e)
         {
-            //string hashValue = e.hashValue;
             await DisplayAlert("Hash Value", e.hashValue.ToString(), "Ok");
         }
 
@@ -148,6 +150,7 @@ namespace HarperDBStudioMobile.Views
             var instanceSchemaClient = RestService.For<IGenericRestClient<string, RequestSqlActionModel>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
             try
             {
+                _currentTableDataList.Clear();
                 var instanceSchemaTableData = await instanceSchemaClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, requestSqlActionModel);
                 if (instanceSchemaTableData != null && instanceSchemaTableData.IsSuccessStatusCode && instanceSchemaTableData.Content != null)
                 {
@@ -171,10 +174,8 @@ namespace HarperDBStudioMobile.Views
                         _currentTableDataList.Add(_currentTableData);
                     }
 
-                    currentTableDataList.Clear();
                     currentTableDataList = _currentTableDataList;
                     this.GenerateGridColumns();
-                    //this.PopulateDataGrid();
                 }
                 else
                 {
@@ -207,23 +208,6 @@ namespace HarperDBStudioMobile.Views
                     {
                         return false;
                     }
-                    //var jobj = Newtonsoft.Json.Linq.JObject.Parse(instanceSchema.Content.ToString());
-                    //foreach (JContainer child in jobj.Children())
-                    //{
-                    //    string FirstChild = child.First.ToString();
-                    //    if (child.First.ToString().StartsWith("["))
-                    //    {
-                    //        continue;
-                    //    }
-                    //    Dictionary<string, InstanceSchema> keyValuePairs = new Dictionary<string, InstanceSchema>() { };
-                    //    var _jobj = Newtonsoft.Json.Linq.JObject.Parse(child.First.ToString());
-                    //    foreach (var innerChild in _jobj)
-                    //    {
-                    //        keyValuePairs.Add(innerChild.Key.ToString(), innerChild.Value.ToObject<InstanceSchema>());
-                    //    }
-                    //    //instanceSchemaDict.Add(child.Path, keyValuePairs);
-                    //}
-                    //this.PopulateSchemaPicker();
                 }
                 else
                 {

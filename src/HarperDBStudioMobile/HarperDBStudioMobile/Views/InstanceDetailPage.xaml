@@ -2,21 +2,34 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
-    x:Class="HarperDBStudioMobile.Views.InstanceDetailPage">
+    x:Class="HarperDBStudioMobile.Views.InstanceDetailPage" BackgroundColor="{StaticResource AppBackgroundColor}">
     <StackLayout VerticalOptions="FillAndExpand">
-        <Picker x:Name="schemaPicker"
-                Title="Select a Schema"
-                TitleColor="Red"
-                SelectedIndexChanged="schemaPicker_SelectedIndexChanged">
-        </Picker>
-        <Picker x:Name="tablePicker"
-                Title="Select a Table"
-                TitleColor="Black"
-                SelectedIndexChanged="tablePicker_SelectedIndexChanged">
-        </Picker>
-
-        <StackLayout x:Name="gridStackLayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
+        <StackLayout x:Name="pickerStackLayout"
+                     Margin="20, 20, 20, 0">
+            <Picker x:Name="schemaPicker"
+                    HorizontalTextAlignment="Center"
+                    Title="Select a Schema"
+                    TitleColor="#000000"
+                    BackgroundColor="{StaticResource FrameBackgroundColor}"
+                    SelectedIndexChanged="schemaPicker_SelectedIndexChanged">
+            </Picker>
+            <Picker x:Name="tablePicker"
+                    HorizontalTextAlignment="Center"
+                    Title="Select a Table"
+                    TitleColor="#000000"
+                    BackgroundColor="{StaticResource FrameBackgroundColor}"
+                    SelectedIndexChanged="tablePicker_SelectedIndexChanged">
+            </Picker>
         </StackLayout>
+
+        <ScrollView>
+            <StackLayout x:Name="gridStackLayout"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand"
+               Margin="5, 20, 10, 5"
+               BackgroundColor="{StaticResource FrameBackgroundColor}">
+
+            </StackLayout>
+        </ScrollView>
     </StackLayout>
 </ContentPage>
