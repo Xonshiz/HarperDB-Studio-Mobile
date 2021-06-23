@@ -17,7 +17,7 @@ namespace HarperDBStudioMobile.Views
             }
         }
 
-        public CustomTableRowCell(string key, string value)
+        public CustomTableRowCell(string key, string value, bool addKey = false)
         {
             var tapGestureRecognizer = new TapGestureRecognizer();
 
@@ -32,14 +32,20 @@ namespace HarperDBStudioMobile.Views
             };
 
             StackLayout layout = new StackLayout();
-            layout.HorizontalOptions = LayoutOptions.FillAndExpand;
-            layout.VerticalOptions = LayoutOptions.StartAndExpand;
+            //layout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            //layout.VerticalOptions = LayoutOptions.StartAndExpand;
             layout.Margin = 0;
             layout.Padding = 0;
             layout.GestureRecognizers.Add(tapGestureRecognizer);
 
-            layout.Children.Add(new Label { Text = key, Padding = 0, Margin = 0, HorizontalOptions = LayoutOptions.FillAndExpand });
-            layout.Children.Add(new Label { Text = value, Padding = 0, Margin = 0, HorizontalOptions = LayoutOptions.FillAndExpand });
+            if (addKey)
+            {
+                layout.Children.Add(new Label { Text = key, Padding = 0, Margin = 0, FontAttributes = FontAttributes.Bold });
+            } else
+            {
+                layout.Children.Add(new Label { Text = value, Padding = 0, Margin = 0 });
+            }
+            
 
             this.BackgroundColor = Color.WhiteSmoke;
             Content = layout;

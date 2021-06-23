@@ -22,14 +22,18 @@
             </Picker>
         </StackLayout>
 
-        <ScrollView>
+        <Frame HasShadow="True"
+               BorderColor="#201d45"
+               CornerRadius="5"
+               Margin="10"
+               HorizontalOptions="CenterAndExpand"
+               BackgroundColor="{StaticResource FrameBackgroundColor}">
+            <ScrollView Orientation="Horizontal">
             <StackLayout x:Name="gridStackLayout"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand"
-               Margin="5, 20, 10, 5"
                BackgroundColor="{StaticResource FrameBackgroundColor}">
 
             </StackLayout>
         </ScrollView>
+        </Frame>
     </StackLayout>
 </ContentPage>

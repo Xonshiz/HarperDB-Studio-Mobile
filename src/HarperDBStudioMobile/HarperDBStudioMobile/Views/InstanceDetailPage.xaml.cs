@@ -119,9 +119,15 @@ namespace HarperDBStudioMobile.Views
         private void GenerateGridColumns()
         {
             gridStackLayout.Children.Clear();
+
+            Dictionary<string, string> tempDict = attributes.ToDictionary(x => x, x => x);
+            ScrollingGridView _scrollingGridView = new ScrollingGridView(tempDict, this.hashAttribute, true);
+            gridStackLayout.Children.Add(_scrollingGridView);
+            _scrollingGridView.GridRowTapped += ScrollingGridView_GridRowTapped;
+
             foreach (Dictionary<string, string> item in currentTableDataList)
             {
-                ScrollingGridView scrollingGridView = new ScrollingGridView(item, this.hashAttribute);
+                ScrollingGridView scrollingGridView = new ScrollingGridView(item, this.hashAttribute, false);
                 gridStackLayout.Children.Add(scrollingGridView);
                 scrollingGridView.GridRowTapped += ScrollingGridView_GridRowTapped;
             }

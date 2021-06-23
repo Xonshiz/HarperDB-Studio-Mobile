@@ -10,15 +10,15 @@ namespace HarperDBStudioMobile.Views
         public string hashAttributeForRow;
         public event EventHandler<RowTappedEventArgs> GridRowTapped;
 
-        public ScrollingGridView(Dictionary<string, string> currentTableDataList, string hashColumn)
+        public ScrollingGridView(Dictionary<string, string> currentTableDataList, string hashColumn, bool addKey)
         {
             InitializeComponent();
 
-            AddItemsToGrid(currentTableDataList, hashColumn);
+            AddItemsToGrid(currentTableDataList, hashColumn, addKey);
 
         }
 
-        void AddItemsToGrid(Dictionary<string, string> currentTableDataList, string hashColumn)
+        void AddItemsToGrid(Dictionary<string, string> currentTableDataList, string hashColumn, bool addKey)
         {
             gridView.Children.Clear();
             for (int x = 1; x < gridView.ColumnDefinitions.Count; x++)
@@ -33,7 +33,7 @@ namespace HarperDBStudioMobile.Views
                     this.hashAttributeForRow = item.Value;
                 }
                 gridView.ColumnDefinitions.Add(new ColumnDefinition());
-                CustomTableRowCell customTableRowCell = new CustomTableRowCell(item.Key, item.Value);
+                CustomTableRowCell customTableRowCell = new CustomTableRowCell(item.Key, item.Value, addKey);
                 customTableRowCell.Margin = 0;
                 customTableRowCell.Padding = 0;
                 customTableRowCell.FlowDirection = FlowDirection.LeftToRight;
