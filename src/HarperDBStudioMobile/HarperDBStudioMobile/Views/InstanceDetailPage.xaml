@@ -22,10 +22,31 @@
             </Picker>
         </StackLayout>
 
-        <Frame HasShadow="True"
+        <Frame x:Name="editRecordFrame"
+               HasShadow="True"
+               IsVisible="False"
                BorderColor="#201d45"
                CornerRadius="5"
                Margin="10"
+               HorizontalOptions="CenterAndExpand"
+               BackgroundColor="{StaticResource FrameBackgroundColor}">
+            <StackLayout Margin="20, 20, 20, 0">
+                <Editor x:Name="editRecordEditor"
+                        IsSpellCheckEnabled="false"
+                        FontAttributes="None" >
+
+                </Editor>
+                <Button x:Name="updateRecordButton" Text="Update" Clicked="Update_Table_Record" />
+                <Button x:Name="cancelEditRecordButton" Text="Cancel" Clicked="cancelEditRecordButton_Clicked" />
+            </StackLayout>
+        </Frame>
+
+        <Frame x:Name="gridDataFrame"
+               HasShadow="True"
+               BorderColor="#201d45"
+               CornerRadius="5"
+               Margin="10"
+               Padding="10"
                HorizontalOptions="CenterAndExpand"
                BackgroundColor="{StaticResource FrameBackgroundColor}">
             <ScrollView Orientation="Horizontal">

@@ -28,6 +28,8 @@ namespace HarperDBStudioMobile.Views
         Dictionary<string, Dictionary<string, InstanceSchema>> instanceSchemaDict = new Dictionary<string, Dictionary<string, InstanceSchema>>() { };
         RequestSqlActionModel requestSqlActionModel = new RequestSqlActionModel();
         RequestDescribeTableModel requestDescribeTableModel = new RequestDescribeTableModel();
+        RequestGetRecordDetailsModel requestGetRecordDetailsModel = new RequestGetRecordDetailsModel();
+        RequestUpdateRecordModel requestUpdateRecordModel = new RequestUpdateRecordModel();
         List<string> attributes = new List<string>();
         Dictionary<string, string> currentTableData = new Dictionary<string, string>() { };
         List<Dictionary<string, string>> currentTableDataList = new List<Dictionary<string, string>>() { };
@@ -135,10 +137,22 @@ namespace HarperDBStudioMobile.Views
 
         private async void ScrollingGridView_GridRowTapped(object sender, RowTappedEventArgs e)
         {
-            await DisplayAlert("Hash Value", e.hashValue.ToString(), "Ok");
+            string editTableData = await this.GetEditTableData(e.hashValue);
+            if (String.IsNullOrWhiteSpace(editTableData))
+            {
+                await DisplayAlert("No Info Found", $"Couldn't find any info with {e.hashValue} Hash Value.", "Ok");
+            } else
+            {
+                this.SwitchEditTableCard(true, editTableData);
+                editRecordFrame.IsVisible = true;
+                gridDataFrame.IsVisible = false;
+                editRecordEditor.IsReadOnly = false;
+                editRecordEditor.Text = editTableData;
+            }
+            //await DisplayAlert("Hash Value", e.hashValue.ToString(), "Ok");
         }
 
-        async void tablePicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
+        void tablePicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
         {
             var picker = (Picker)sender;
             int selectedIndex = picker.SelectedIndex;
@@ -148,8 +162,13 @@ namespace HarperDBStudioMobile.Views
 
             this._currentSelectedTable = selectedIndex;
 
-            await this.DescribeTable();
+            this.GetTableData();
+            
+        }
 
+        async void GetTableData(bool switchEditor = false)
+        {
+            await this.DescribeTable();
             requestSqlActionModel.operation = Utils.Utils.INSTANCE_OPERATIONS.sql.ToString();
             //SELECT * FROM `newSchema`.`newTable`  OFFSET 0 FETCH 20
             requestSqlActionModel.sql = $"SELECT * FROM `{this._schemaList[_currentSelectedSchema]}`.`{this._schemaTableList[_currentSelectedTable]}`  OFFSET {this._offset} FETCH 20";
@@ -182,6 +201,11 @@ namespace HarperDBStudioMobile.Views
 
                     currentTableDataList = _currentTableDataList;
                     this.GenerateGridColumns();
+                    if (switchEditor)
+                    {
+                        //Make Editor HIDDEN and READONLY.
+                        this.SwitchEditTableCard(false);
+                    }
                 }
                 else
                 {
@@ -191,6 +215,34 @@ namespace HarperDBStudioMobile.Views
             catch (Exception ex)
             {
                 await DisplayAlert("Error!", ex.Message, "OK");
+            }
+        }
+
+        async Task<string> GetEditTableData(string hashValue)
+        {
+            requestGetRecordDetailsModel.operation = Utils.Utils.INSTANCE_OPERATIONS.search_by_hash.ToString();
+            requestGetRecordDetailsModel.schema = this._schemaList[_currentSelectedSchema];
+            requestGetRecordDetailsModel.table = this._schemaTableList[_currentSelectedTable];
+            requestGetRecordDetailsModel.get_attributes = new List<string>() { "*" };
+            requestGetRecordDetailsModel.hash_values = new List<string>() { hashValue };
+            var editSchemaDetailsClient = RestService.For<IGenericRestClient<string, RequestGetRecordDetailsModel>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
+            try
+            {
+                var editTableSchema = await editSchemaDetailsClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, requestGetRecordDetailsModel);
+                if (editTableSchema != null && editTableSchema.IsSuccessStatusCode && editTableSchema.Content != null)
+                {
+                    var _jobj = Newtonsoft.Json.Linq.JArray.Parse(editTableSchema.Content.ToString());
+                    return _jobj.First.ToString().ToString();
+                }
+                else
+                {
+                    return String.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error!", ex.Message, "OK");
+                return String.Empty;
             }
         }
 
@@ -226,6 +278,48 @@ namespace HarperDBStudioMobile.Views
                 await DisplayAlert("Error!", ex.Message, "OK");
                 return false;
             }
+        }
+
+        async void Update_Table_Record(System.Object sender, System.EventArgs e)
+        {
+            string cleanString = "{\"operation\":\"update\",\"schema\":\"" + this._schemaList[_currentSelectedSchema] + "\",\"table\":\"" + this._schemaTableList[_currentSelectedTable] + "\",\"records\":[" + editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty) + "]}";
+
+
+            var editSchemaDetailsClient = RestService.For<IGenericRestClient<string, string>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
+            try
+            {
+                var editTableSchema = await editSchemaDetailsClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, cleanString);
+                if (editTableSchema != null && editTableSchema.IsSuccessStatusCode && editTableSchema.Content != null)
+                {
+                    //Console.Write(editTableSchema.Content);
+                    this.GetTableData(true);
+                }
+                else
+                {
+                    Console.Write(editTableSchema.Content);
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error!", ex.Message, "OK");
+            }
+        }
+
+        void cancelEditRecordButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            this.SwitchEditTableCard(false);
+            //editRecordFrame.IsVisible = false;
+            //gridDataFrame.IsVisible = true;
+            //editRecordEditor.IsReadOnly = true;
+            //editRecordEditor.Text = String.Empty;
+        }
+
+        void SwitchEditTableCard(bool editFlag, string dataToSet = "")
+        {
+            editRecordFrame.IsVisible = editFlag;
+            gridDataFrame.IsVisible = !editFlag;
+            editRecordEditor.IsReadOnly = !editFlag;
+            editRecordEditor.Text = dataToSet;
         }
     }
 }

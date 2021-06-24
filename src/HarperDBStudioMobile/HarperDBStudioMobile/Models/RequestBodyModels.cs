@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace HarperDBStudioMobile.Models
 {
@@ -163,7 +164,9 @@ namespace HarperDBStudioMobile.Models
         public string operation { get; set; }
         public string schema { get; set; }
         public string table { get; set; }
-        public List<dynamic> records { get; set; }
+        public List<object> records { get; set; }
+        //public JArray records { get; set; }
+        //public object[] records { get; set; }
     }
 
     //{"operation":"search_by_hash","schema":"newSchema","table":"newTable","hash_values":["sasdasdas"],"get_attributes":["*"]}
