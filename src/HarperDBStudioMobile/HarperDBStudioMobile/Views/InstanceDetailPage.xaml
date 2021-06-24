@@ -22,6 +22,11 @@
             </Picker>
         </StackLayout>
 
+        <StackLayout x:Name="tableMenuStackLayout"
+                     Margin="10">
+            <Button x:Name="addRowButton" Text="ADD" Clicked="addRowButton_Clicked" />
+        </StackLayout>
+
         <Frame x:Name="editRecordFrame"
                HasShadow="True"
                IsVisible="False"
@@ -30,13 +35,18 @@
                Margin="10"
                HorizontalOptions="CenterAndExpand"
                BackgroundColor="{StaticResource FrameBackgroundColor}">
-            <StackLayout Margin="20, 20, 20, 0">
+            <StackLayout Margin="20, 20, 20, 0" HorizontalOptions="CenterAndExpand">
                 <Editor x:Name="editRecordEditor"
                         IsSpellCheckEnabled="false"
-                        FontAttributes="None" >
+                        FontAttributes="None"
+                        HorizontalOptions="CenterAndExpand"
+                        AutoSize="TextChanges"
+                        MinimumHeightRequest="500"
+                        MinimumWidthRequest="500">
 
                 </Editor>
                 <Button x:Name="updateRecordButton" Text="Update" Clicked="Update_Table_Record" />
+                <Button x:Name="deleteRecordButton" Text="Delete" Clicked="deleteRecordButton_Clicked" />
                 <Button x:Name="cancelEditRecordButton" Text="Cancel" Clicked="cancelEditRecordButton_Clicked" />
             </StackLayout>
         </Frame>

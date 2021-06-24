@@ -20,6 +20,8 @@ namespace HarperDBStudioMobile.Views
 {
     public partial class InstanceDetailPage : ContentPage
     {
+        private string currentRowOperation, currentRecordHashValue = String.Empty;
+        private bool isAddNewRow, isDeleteRow = false;
         private bool _isRefreshing;
         private string hashAttribute = String.Empty;
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
@@ -44,6 +46,7 @@ namespace HarperDBStudioMobile.Views
             schemaPicker.ItemsSource = _schemaList;
             tablePicker.ItemsSource = _schemaTableList;
             this.GetSchemaDetails();
+            editRecordEditor.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
         }
 
         private void PopulateSchemaPicker()
@@ -144,12 +147,10 @@ namespace HarperDBStudioMobile.Views
             } else
             {
                 this.SwitchEditTableCard(true, editTableData);
-                editRecordFrame.IsVisible = true;
-                gridDataFrame.IsVisible = false;
-                editRecordEditor.IsReadOnly = false;
-                editRecordEditor.Text = editTableData;
+                this.currentRecordHashValue = e.hashValue;
+                deleteRecordButton.IsVisible = true;
+                updateRecordButton.Text = "Update";
             }
-            //await DisplayAlert("Hash Value", e.hashValue.ToString(), "Ok");
         }
 
         void tablePicker_SelectedIndexChanged(System.Object sender, System.EventArgs e)
@@ -280,18 +281,32 @@ namespace HarperDBStudioMobile.Views
             }
         }
 
-        async void Update_Table_Record(System.Object sender, System.EventArgs e)
+        void Update_Table_Record(System.Object sender, System.EventArgs e)
         {
-            string cleanString = "{\"operation\":\"update\",\"schema\":\"" + this._schemaList[_currentSelectedSchema] + "\",\"table\":\"" + this._schemaTableList[_currentSelectedTable] + "\",\"records\":[" + editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty) + "]}";
+            if (!this.isAddNewRow && !this.isDeleteRow)
+            {
+                this.currentRowOperation = Utils.Utils.INSTANCE_OPERATIONS.update.ToString();
+            }
+            this.TableRowEditCalls(this.currentRowOperation);
+            this.isAddNewRow = false;
+            this.isDeleteRow = false;
+            //updateRecordButton.Text = "Update";
+        }
 
+        async void TableRowEditCalls(string operation)
+        {
+            string cleanString = "{\"operation\":\"" + operation + "\",\"schema\":\"" + this._schemaList[_currentSelectedSchema] + "\",\"table\":\"" + this._schemaTableList[_currentSelectedTable] + "\",\"records\":[" + editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"') + "]}";
 
+            if (this.isDeleteRow && !String.IsNullOrWhiteSpace(this.currentRecordHashValue))
+            {
+                cleanString = "{\"operation\":\"" + operation + "\",\"schema\":\"" + this._schemaList[_currentSelectedSchema] + "\",\"table\":\"" + this._schemaTableList[_currentSelectedTable] + "\",\"hash_values\":[\"" + this.currentRecordHashValue + "\"]}";
+            }
             var editSchemaDetailsClient = RestService.For<IGenericRestClient<string, string>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
             try
             {
                 var editTableSchema = await editSchemaDetailsClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, cleanString);
                 if (editTableSchema != null && editTableSchema.IsSuccessStatusCode && editTableSchema.Content != null)
                 {
-                    //Console.Write(editTableSchema.Content);
                     this.GetTableData(true);
                 }
                 else
@@ -308,18 +323,45 @@ namespace HarperDBStudioMobile.Views
         void cancelEditRecordButton_Clicked(System.Object sender, System.EventArgs e)
         {
             this.SwitchEditTableCard(false);
-            //editRecordFrame.IsVisible = false;
-            //gridDataFrame.IsVisible = true;
-            //editRecordEditor.IsReadOnly = true;
-            //editRecordEditor.Text = String.Empty;
+            updateRecordButton.Text = "Update";
         }
 
         void SwitchEditTableCard(bool editFlag, string dataToSet = "")
         {
             editRecordFrame.IsVisible = editFlag;
             gridDataFrame.IsVisible = !editFlag;
+            tableMenuStackLayout.IsVisible = !editFlag;
             editRecordEditor.IsReadOnly = !editFlag;
             editRecordEditor.Text = dataToSet;
+        }
+
+        void addRowButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            string tempJsonString = "{";
+            foreach (var attribute in attributes)
+            {
+                if (attribute == "__updatedtime__" || attribute == "__createdtime__" || attribute == hashAttribute)
+                    continue;
+                tempJsonString += "\n\t\"" + attribute + "\":null,";
+            }
+            tempJsonString = tempJsonString.TrimEnd(',');
+            tempJsonString += "\n}";
+            this.SwitchEditTableCard(true, Regex.Unescape(tempJsonString));
+            this.isAddNewRow = true;
+            deleteRecordButton.IsVisible = false;
+            updateRecordButton.Text = "Insert";
+            this.currentRowOperation = Utils.Utils.INSTANCE_OPERATIONS.insert.ToString();
+        }
+
+        async void deleteRecordButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            this.isDeleteRow = true;
+            this.currentRowOperation = Utils.Utils.INSTANCE_OPERATIONS.delete.ToString();
+            bool delete = await DisplayAlert("Delete?", "Are you sure you want to delete this row?", "Ok", "Cancel");
+            if (delete)
+            {
+                this.Update_Table_Record(sender, e);
+            }
         }
     }
 }
