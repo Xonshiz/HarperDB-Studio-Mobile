@@ -24,7 +24,7 @@
 
         <StackLayout x:Name="tableMenuStackLayout"
                      Margin="10">
-            <Button x:Name="addRowButton" Text="ADD" Clicked="addRowButton_Clicked" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff" />
+            <Button x:Name="addRowButton" Text="ADD" Clicked="addRowButton_Clicked" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff" BorderWidth="2" />
         </StackLayout>
 
         <Frame x:Name="editRecordFrame"
