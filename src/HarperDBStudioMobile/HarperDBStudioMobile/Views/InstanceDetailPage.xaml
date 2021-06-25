@@ -24,7 +24,7 @@
 
         <StackLayout x:Name="tableMenuStackLayout"
                      Margin="10">
-            <Button x:Name="addRowButton" Text="ADD" Clicked="addRowButton_Clicked" />
+            <Button x:Name="addRowButton" Text="ADD" Clicked="addRowButton_Clicked" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff" />
         </StackLayout>
 
         <Frame x:Name="editRecordFrame"
@@ -51,7 +51,8 @@
             </StackLayout>
         </Frame>
 
-        <Frame x:Name="gridDataFrame"
+        <StackLayout>
+            <Frame x:Name="gridDataFrame"
                HasShadow="True"
                BorderColor="#201d45"
                CornerRadius="5"
@@ -59,12 +60,31 @@
                Padding="10"
                HorizontalOptions="CenterAndExpand"
                BackgroundColor="{StaticResource FrameBackgroundColor}">
-            <ScrollView Orientation="Horizontal">
-            <StackLayout x:Name="gridStackLayout"
-               BackgroundColor="{StaticResource FrameBackgroundColor}">
+                <ScrollView Orientation="Horizontal">
+                    <StackLayout x:Name="gridStackLayout"
+                       BackgroundColor="{StaticResource FrameBackgroundColor}">
 
+                    </StackLayout>
+                </ScrollView>
+            </Frame>
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="CenterAndExpand">
+                <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Button Grid.Row="0" x:Name="previousPageButton" Text="&lt;" FontSize="Medium" FontAttributes="Bold" Clicked="previousPageButton_Clicked"></Button>
+                <StackLayout VerticalOptions="CenterAndExpand" Orientation="Horizontal">
+                    <Label Grid.Row="0" x:Name="currentPageLabel" Text="1" FontSize="Medium" FontAttributes="Bold" TextColor="#ffffff" />
+                    <Label Grid.Row="0" Text="/" FontSize="Medium" FontAttributes="Bold" TextColor="#ffffff" />
+                    <Label Grid.Row="0" x:Name="totalPageLabel" Text="1" FontSize="Medium" FontAttributes="Bold" TextColor="#ffffff" />
+                </StackLayout>
+                <Button Grid.Row="0" x:Name="nextPageButton" Text="&gt;" FontSize="Medium" FontAttributes="Bold" Clicked="nextPageButton_Clicked"></Button>
             </StackLayout>
-        </ScrollView>
-        </Frame>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

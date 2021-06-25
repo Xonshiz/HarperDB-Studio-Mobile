@@ -47,6 +47,8 @@ namespace HarperDBStudioMobile.Views
             tablePicker.ItemsSource = _schemaTableList;
             this.GetSchemaDetails();
             editRecordEditor.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
+            this.previousPageButton.IsEnabled = false;
+            this.nextPageButton.IsEnabled = false;
         }
 
         private void PopulateSchemaPicker()
@@ -172,7 +174,7 @@ namespace HarperDBStudioMobile.Views
             await this.DescribeTable();
             requestSqlActionModel.operation = Utils.Utils.INSTANCE_OPERATIONS.sql.ToString();
             //SELECT * FROM `newSchema`.`newTable`  OFFSET 0 FETCH 20
-            requestSqlActionModel.sql = $"SELECT * FROM `{this._schemaList[_currentSelectedSchema]}`.`{this._schemaTableList[_currentSelectedTable]}`  OFFSET {this._offset} FETCH 20";
+            requestSqlActionModel.sql = $"SELECT * FROM `{this._schemaList[_currentSelectedSchema]}`.`{this._schemaTableList[_currentSelectedTable]}`  OFFSET {this._offset} FETCH 10";
             var instanceSchemaClient = RestService.For<IGenericRestClient<string, RequestSqlActionModel>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
             try
             {
@@ -202,6 +204,30 @@ namespace HarperDBStudioMobile.Views
 
                     currentTableDataList = _currentTableDataList;
                     this.GenerateGridColumns();
+                    int recordCount = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count;
+                    if (Convert.ToInt16(this.currentPageLabel.Text) <= recordCount)
+                    {
+                        this.previousPageButton.IsEnabled = false;
+                        this.nextPageButton.IsEnabled = false;
+                    }
+                    if (recordCount == 0)
+                    {
+                        this.totalPageLabel.Text = "0";
+                        this.previousPageButton.IsEnabled = false;
+                        this.nextPageButton.IsEnabled = false;
+                    } else
+                    {
+                        this.totalPageLabel.Text = Convert.ToInt16(((recordCount - 1) / 10) + 1).ToString();
+                        if (Convert.ToInt16(this.totalPageLabel.Text) > 1)
+                        {
+                            this.previousPageButton.IsEnabled = true;
+                            this.nextPageButton.IsEnabled = true;
+                        } else
+                        {
+                            this.previousPageButton.IsEnabled = false;
+                            this.nextPageButton.IsEnabled = false;
+                        }
+                    }
                     if (switchEditor)
                     {
                         //Make Editor HIDDEN and READONLY.
@@ -361,6 +387,31 @@ namespace HarperDBStudioMobile.Views
             if (delete)
             {
                 this.Update_Table_Record(sender, e);
+            }
+        }
+
+        void previousPageButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            if (this._offset <= 0)
+            {
+                this.previousPageButton.IsEnabled = false;
+            } else
+            {
+                this._offset -= 10;
+                this.GetTableData();
+            }
+        }
+
+        void nextPageButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            if (Convert.ToInt16(this.totalPageLabel.Text) <= 1)
+            {
+                this.nextPageButton.IsEnabled = false;
+            }
+            else
+            {
+                this._offset += 10;
+                this.GetTableData();
             }
         }
     }
