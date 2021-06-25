@@ -49,6 +49,7 @@ namespace HarperDBStudioMobile.Views
         {
             InitializeComponent();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+            this.CheckAndCallCachedOperations(true);
             schemaPicker.ItemsSource = _schemaList;
             tablePicker.ItemsSource = _schemaTableList;
             this.GetSchemaDetails();
@@ -207,7 +208,7 @@ namespace HarperDBStudioMobile.Views
                     {
                         attributes.Add(attribute.attribute.ToString());
                     }
-
+                    _currentTableDataList.Clear();
                     this.PopulateTableData(instanceSchemaTableData.Content.ToString());
                     if (switchEditor)
                     {
@@ -228,7 +229,7 @@ namespace HarperDBStudioMobile.Views
 
         void PopulateTableData(string data)
         {
-            _currentTableDataList.Clear();
+            //_currentTableDataList.Clear();
             var _jobj = Newtonsoft.Json.Linq.JArray.Parse(data);
 
             foreach (var item in _jobj)
@@ -366,6 +367,10 @@ namespace HarperDBStudioMobile.Views
             if (failedOperations > 0)
             {
                 await DisplayAlert("Failed Opertion", "Some operation queries failed to be sent", "ok");
+            } else
+            {
+                //After we're done successfully sending all, clear the cache.
+                Preferences.Set(Utils.Utils.STORAGE_KEYS.CACHED_OPERATIONS.ToString(), JsonConvert.SerializeObject(offlineOperationStrings));
             }
         }
 
@@ -385,21 +390,15 @@ namespace HarperDBStudioMobile.Views
             {
                 //We'll cache things.
                 this.offlineOperationStrings.Add(cleanString);
+                try
+                {
+                    Preferences.Set(Utils.Utils.STORAGE_KEYS.CACHED_OPERATIONS.ToString(), JsonConvert.SerializeObject(offlineOperationStrings));
+                }
+                catch (Exception ex)
+                {
+
+                }
                 this.PopulateTableData($"[{editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"')}]");
-                //_currentTableDataList.Clear();
-                //var _jobj = Newtonsoft.Json.Linq.JArray.Parse($"[{editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"')}]");
-
-                //foreach (var item in _jobj)
-                //{
-                //    var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
-                //    Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
-                //    foreach (var dataRow in parsedString)
-                //    {
-                //        _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
-
-                //    }
-                //    _currentTableDataList.Add(_currentTableData);
-                //}
 
                 this.SwitchEditTableCard(false);
             } else
@@ -477,6 +476,7 @@ namespace HarperDBStudioMobile.Views
             {
                 this._offset -= 10;
                 this.GetTableData();
+                currentPageLabel.Text = (Convert.ToInt16(currentPageLabel.Text) - 1).ToString();
             }
         }
 
@@ -490,20 +490,37 @@ namespace HarperDBStudioMobile.Views
             {
                 this._offset += 10;
                 this.GetTableData();
+                currentPageLabel.Text = (Convert.ToInt16(currentPageLabel.Text) + 1).ToString();
             }
         }
 
         void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
         {
-            var access = e.NetworkAccess;
-            var profiles = e.ConnectionProfiles;
             var current = Connectivity.NetworkAccess;
 
             //If NO ACCESS, then we have offline mode.
             this._isOffileMode = current == NetworkAccess.None;
             noNetworkLabel.IsVisible = this._isOffileMode;
+            this.CheckAndCallCachedOperations();
+        }
 
-            if (!this._isOffileMode && offlineOperationStrings.Count > 0)
+        void CheckAndCallCachedOperations(bool skipNetworkCheck = false)
+        {
+            try
+            {
+                var cachedOperations = Preferences.Get(Utils.Utils.STORAGE_KEYS.CACHED_OPERATIONS.ToString(), null);
+                if (cachedOperations != null)
+                {
+                    offlineOperationStrings = JsonConvert.DeserializeObject<List<string>>(cachedOperations);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            //If skipNetworkCheck, just check for offlineOperations and try to push through.
+            //Because of failure check in SendCachedOperations(), nothing would be wiped from cache if things fail.
+            if ((!this._isOffileMode || skipNetworkCheck) && offlineOperationStrings.Count > 0)
             {
                 this.SendCachedOperations();
             }

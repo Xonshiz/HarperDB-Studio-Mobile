@@ -19,7 +19,8 @@ namespace HarperDBStudioMobile.Utils
             LOGGED_IN_USER_ORGS,
             INSTANCE_MODELS,
             INSTANCE_CREDENTIALS,
-            SCHEMA_DATA
+            SCHEMA_DATA,
+            CACHED_OPERATIONS
         }
         public enum TABLE_RECORD_MODES
         {
