@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,21 +30,32 @@ namespace HarperDBStudioMobile.Views
             user_email.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
             user_password.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
 
-            user_email.Text = Utils.Utils.base_username;
-            user_password.Text = Utils.Utils.base_password;
+            //If we have cached credentials, try to log the user in.
+            if (!String.IsNullOrWhiteSpace(LoggedInUser.LoginEmail) && !String.IsNullOrWhiteSpace(LoggedInUser.LoginPassword))
+            {
+                user_email.Text = LoggedInUser.LoginEmail;
+                user_password.Text = LoggedInUser.LoginPassword;
+                this.LoginUser();
+            }
         }
 
-        private async void Button_Clicked(System.Object sender, System.EventArgs e)
+        private void Button_Clicked(System.Object sender, System.EventArgs e)
         {
             if (String.IsNullOrWhiteSpace(user_email.Text) || String.IsNullOrWhiteSpace(user_password.Text))
             {
                 return;
             }
+            this.LoginUser();
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
+            
+        }
+
+        private async void LoginUser()
+        {
             requestGetUserModel.password = user_password.Text;
             requestGetUserModel.email = user_email.Text;
             requestGetUserModel.loggingIn = true;
-            
+
             try
             {
                 var loginInfo = await restClient.GetUser(requestGetUserModel);
@@ -62,6 +74,21 @@ namespace HarperDBStudioMobile.Views
                     LoggedInUser.LastLogin = loginInfo.Content.Body.last_login;
                     LoggedInUser.Orgs = loginInfo.Content.Body.orgs;
 
+                    if (remember_me_checkbox.IsChecked)
+                    {
+                        try
+                        {
+                            Preferences.Set(Utils.Utils.STORAGE_KEYS.BASE_EMAIL.ToString(), user_email.Text);
+                            Preferences.Set(Utils.Utils.STORAGE_KEYS.BASE_PASSWORD.ToString(), user_password.Text);
+                            Preferences.Set(Utils.Utils.STORAGE_KEYS.LOGGED_IN_USER_ORGS.ToString(), JsonConvert.SerializeObject(LoggedInUser.Orgs));
+                        }
+                        catch (Exception ex)
+                        {
+                            // Possible that device doesn't support secure storage on device.
+                            await DisplayAlert("Can't Remember You", "Seems like we can't store info to remember you", "OK");
+                        }
+                    }
+
                     await DisplayAlert("Success", "You've Logged in " + loginInfo.Content.Body.firstname, "OK");
                     await Shell.Current.GoToAsync($"{nameof(Organizations)}");
                 }
@@ -69,6 +96,9 @@ namespace HarperDBStudioMobile.Views
                 {
                     //Failure
                     await DisplayAlert("Failure", loginInfo.StatusCode.ToString(), "OK");
+                    user_email.Text = String.Empty;
+                    user_password.Text = String.Empty;
+                    remember_me_checkbox.IsChecked = false;
                 }
             }
             catch (Exception ex)

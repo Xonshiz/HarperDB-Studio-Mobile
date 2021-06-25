@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Refit;
 using Syncfusion.SfDataGrid.XForms;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.DataGrid;
 
@@ -21,24 +22,28 @@ namespace HarperDBStudioMobile.Views
     public partial class InstanceDetailPage : ContentPage
     {
         private string currentRowOperation, currentRecordHashValue = String.Empty;
-        private bool isAddNewRow, isDeleteRow = false;
+        private bool isAddNewRow, isDeleteRow, _isOffileMode = false;
         private bool _isRefreshing;
         private string hashAttribute = String.Empty;
+        private int _currentSelectedSchema, _currentSelectedTable;
+        private int _offset = 0;
+
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
         ObservableCollection<string> _schemaList = new ObservableCollection<string>();
         ObservableCollection<string> _schemaTableList = new ObservableCollection<string>();
         Dictionary<string, Dictionary<string, InstanceSchema>> instanceSchemaDict = new Dictionary<string, Dictionary<string, InstanceSchema>>() { };
-        RequestSqlActionModel requestSqlActionModel = new RequestSqlActionModel();
-        RequestDescribeTableModel requestDescribeTableModel = new RequestDescribeTableModel();
-        RequestGetRecordDetailsModel requestGetRecordDetailsModel = new RequestGetRecordDetailsModel();
-        RequestUpdateRecordModel requestUpdateRecordModel = new RequestUpdateRecordModel();
+
         List<string> attributes = new List<string>();
         Dictionary<string, string> currentTableData = new Dictionary<string, string>() { };
         List<Dictionary<string, string>> currentTableDataList = new List<Dictionary<string, string>>() { };
         List<Dictionary<string, string>> _currentTableDataList = new List<Dictionary<string, string>>() { };
+        List<string> offlineOperationStrings = new List<string>() { };
 
-        private int _currentSelectedSchema, _currentSelectedTable;
-        private int _offset = 0;
+
+        RequestSqlActionModel requestSqlActionModel = new RequestSqlActionModel();
+        RequestDescribeTableModel requestDescribeTableModel = new RequestDescribeTableModel();
+        RequestGetRecordDetailsModel requestGetRecordDetailsModel = new RequestGetRecordDetailsModel();
+        RequestUpdateRecordModel requestUpdateRecordModel = new RequestUpdateRecordModel();
 
         public InstanceDetailPage()
         {
@@ -49,6 +54,18 @@ namespace HarperDBStudioMobile.Views
             editRecordEditor.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
             this.previousPageButton.IsEnabled = false;
             this.nextPageButton.IsEnabled = false;
+        }
+
+        private void CacheSchemaPickerDetails()
+        {
+            try
+            {
+                Preferences.Set(Utils.Utils.STORAGE_KEYS.SCHEMA_DATA.ToString(), JsonConvert.SerializeObject(instanceSchemaDict));
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Serialization failed for Schema: " + ex.Message);
+            }
         }
 
         private void PopulateSchemaPicker()
@@ -64,6 +81,7 @@ namespace HarperDBStudioMobile.Views
 
         private void PopulateTablePicker(string currentSchemaName)
         {
+            //this.CacheTablePickerDetails();
             _schemaTableList.Clear();
             foreach (var table in instanceSchemaDict[currentSchemaName])
             {
@@ -92,6 +110,7 @@ namespace HarperDBStudioMobile.Views
                         }
                         instanceSchemaDict.Add(child.Path, keyValuePairs);
                     }
+                    this.CacheSchemaPickerDetails();
                     this.PopulateSchemaPicker();
                 }
                 else
@@ -319,7 +338,29 @@ namespace HarperDBStudioMobile.Views
             //updateRecordButton.Text = "Update";
         }
 
-        async void TableRowEditCalls(string operation)
+        private async void SendCachedOperations()
+        {
+            int failedOperations = 0;
+            foreach (var operationString in offlineOperationStrings)
+            {
+                try
+                {
+                    this.TableRowEditCalls("cache", operationString);
+                }
+                catch (Exception ex)
+                {
+                    failedOperations++;
+                    continue;
+                }
+            }
+            offlineOperationStrings.Clear();
+            if (failedOperations > 0)
+            {
+                await DisplayAlert("Failed Opertion", "Some operation queries failed to be sent", "ok");
+            }
+        }
+
+        async void TableRowEditCalls(string operation, string cachedCleanString = "")
         {
             string cleanString = "{\"operation\":\"" + operation + "\",\"schema\":\"" + this._schemaList[_currentSelectedSchema] + "\",\"table\":\"" + this._schemaTableList[_currentSelectedTable] + "\",\"records\":[" + editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"') + "]}";
 
@@ -327,22 +368,33 @@ namespace HarperDBStudioMobile.Views
             {
                 cleanString = "{\"operation\":\"" + operation + "\",\"schema\":\"" + this._schemaList[_currentSelectedSchema] + "\",\"table\":\"" + this._schemaTableList[_currentSelectedTable] + "\",\"hash_values\":[\"" + this.currentRecordHashValue + "\"]}";
             }
-            var editSchemaDetailsClient = RestService.For<IGenericRestClient<string, string>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
-            try
+            if (!String.IsNullOrWhiteSpace(cachedCleanString))
             {
-                var editTableSchema = await editSchemaDetailsClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, cleanString);
-                if (editTableSchema != null && editTableSchema.IsSuccessStatusCode && editTableSchema.Content != null)
-                {
-                    this.GetTableData(true);
-                }
-                else
-                {
-                    Console.Write(editTableSchema.Content);
-                }
+                cleanString = cachedCleanString;
             }
-            catch (Exception ex)
+            if (this._isOffileMode)
             {
-                await DisplayAlert("Error!", ex.Message, "OK");
+                //We'll cache things.
+                this.offlineOperationStrings.Add(cleanString);
+            } else
+            {
+                var editSchemaDetailsClient = RestService.For<IGenericRestClient<string, string>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
+                try
+                {
+                    var editTableSchema = await editSchemaDetailsClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, cleanString);
+                    if (editTableSchema != null && editTableSchema.IsSuccessStatusCode && editTableSchema.Content != null)
+                    {
+                        this.GetTableData(true);
+                    }
+                    else
+                    {
+                        Console.Write(editTableSchema.Content);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Error!", ex.Message, "OK");
+                }
             }
         }
 

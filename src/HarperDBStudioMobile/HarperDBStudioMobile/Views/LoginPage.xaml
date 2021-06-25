@@ -16,7 +16,11 @@
             <StackLayout>
                 <Entry x:Name="user_email" Placeholder="Email"/>
                 <Entry x:Name="user_password"  IsPassword="True" Placeholder="Password" />
-                <Button VerticalOptions="Center" Text="Login" Clicked="Button_Clicked" Margin="0,20,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"/>
+                <StackLayout Orientation="Horizontal">
+                    <CheckBox x:Name="remember_me_checkbox" IsChecked="False" />
+                    <Label Text="Remember Me" />
+                </StackLayout>
+            <Button VerticalOptions="Center" Text="Login" Clicked="Button_Clicked" Margin="0,20,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"/>
             </StackLayout>
     </Frame>
 </ContentPage>

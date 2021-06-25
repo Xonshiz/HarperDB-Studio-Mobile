@@ -5,24 +5,30 @@ using System.Windows.Input;
 using HarperDBStudioMobile.Interfaces;
 using HarperDBStudioMobile.Models;
 using HarperDBStudioMobile.ViewModels;
+using Newtonsoft.Json;
 using Refit;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HarperDBStudioMobile.Views
 {
     public partial class Instances : ContentPage
     {
+        private string currentInstanceId = String.Empty;
         IRestClient restClient, instanceRestClient;
+
         public ICommand CarouselItemTapped { get; set; }
 
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
+
         ObservableCollection<InstanceModel> instanceModels = new ObservableCollection<InstanceModel>() { };
+        //List<Dictionary<string, string>> cachedInstanceDetails = new List<Dictionary<string, string>>() { };
+        Dictionary<string, string> cachedInstanceDetails = new Dictionary<string, string>() { };
 
         public Instances()
         {
             InitializeComponent();
-            instance_username.Text = Utils.Utils.instance_username;
-            instance_password.Text = Utils.Utils.instance_password;
+            this.ReadInstanceAuthData();
 
             restClient = RestService.For<IRestClient>(Utils.Utils.BASE_API_URL);
             instance_username.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
@@ -30,22 +36,30 @@ namespace HarperDBStudioMobile.Views
 
             InstanceCarousel.ItemsSource = instanceModels;
             InstanceCarousel.TabIndex = 0;
+
+            //Do this when no Internet.
+            //ReadInstancesFromCache();
+
             this.GetInstanceDetails();
             CarouselItemTapped = new Xamarin.Forms.Command(async (selectItem) => {
                 if (selectItem == null)
                     return;
 
-                InstanceLoginStackLayout.IsVisible = true;
-                InstanceCarousel.IsVisible = false;
-
                 var selectedRequest = selectItem as InstanceModel;
+                this.currentInstanceId = selectedRequest.instance_id;
                 LoggedInUserCurrentSelections.INSTANCE_BASE_URL = selectedRequest.url;
 
-                //LoggedInUserCurrentSelections.current_organization_customer_id = selectedRequest.customer_id;
-                //If we have login data cached and it works, move it
-                //Also populate current auth header here again : LoggedInUserCurrentSelections.current_instance_auth = basicAuth;
-                //await Shell.Current.GoToAsync($"{nameof(Instances)}");
-
+                string instanceAuth = String.Empty;
+                var cachedCredentials = cachedInstanceDetails.TryGetValue(this.currentInstanceId, out instanceAuth);
+                if (String.IsNullOrWhiteSpace(instanceAuth))
+                {
+                    InstanceLoginStackLayout.IsVisible = true;
+                    InstanceCarousel.IsVisible = false;
+                } else
+                {
+                    LoggedInUserCurrentSelections.current_instance_auth = instanceAuth;
+                    this.PushToInstanceDetails();
+                }
             });
         }
 
@@ -70,6 +84,15 @@ namespace HarperDBStudioMobile.Views
                     {
                         instanceModels.Add(instance);
                     }
+                    try
+                    {
+                        Preferences.Set(Utils.Utils.STORAGE_KEYS.INSTANCE_MODELS.ToString(), JsonConvert.SerializeObject(instanceModels));
+                    }
+                    catch (Exception ex)
+                    {
+                        //No need to do anything.
+                        Console.WriteLine("Couldn't set Instance Models in Cache: " + ex.Message);
+                    }
                 }
                 else
                 {
@@ -81,6 +104,23 @@ namespace HarperDBStudioMobile.Views
             {
                 await DisplayAlert("Failure", ex.Message, "OK");
                 return;
+            }
+        }
+
+        private void ReadInstancesFromCache()
+        {
+            try
+            {
+                var instanceData = Preferences.Get(Utils.Utils.STORAGE_KEYS.INSTANCE_MODELS.ToString(), null);
+                if (instanceData != null)
+                {
+                    this.instanceModels = JsonConvert.DeserializeObject<ObservableCollection<InstanceModel>>(instanceData);
+                }
+            }
+            catch (Exception ex)
+            {
+                //Do Nothing
+                Console.WriteLine("Couldn't read Instance Models in Cache: " + ex.Message);
             }
         }
 
@@ -106,6 +146,7 @@ namespace HarperDBStudioMobile.Views
                 if (instanceAuthVerification != null && instanceAuthVerification.IsSuccessStatusCode && instanceAuthVerification.Content.username != null)
                 {
                     //Can add the auth to DICTIONARY here.
+                    this.CacheInstanceAuthDetails(this.currentInstanceId, basicAuth);
                     await DisplayAlert("Success!", instanceAuthVerification.Content.username, "OK");
                     this.PushToInstanceDetails();
                 } else
@@ -123,6 +164,35 @@ namespace HarperDBStudioMobile.Views
         {
             InstanceLoginStackLayout.IsVisible = false;
             InstanceCarousel.IsVisible = true;
+        }
+
+        private void ReadInstanceAuthData()
+        {
+            try
+            {
+                var cachedValues = Preferences.Get(Utils.Utils.STORAGE_KEYS.INSTANCE_CREDENTIALS.ToString(), null);
+                if (cachedValues != null)
+                {
+                    this.cachedInstanceDetails = JsonConvert.DeserializeObject<Dictionary<string, string>>(cachedValues);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Error while reading cached instance auths." + ex.Message);
+            }
+        }
+
+        private void CacheInstanceAuthDetails(string instanceId, string instanceBasicAuth)
+        {
+            try
+            {
+                cachedInstanceDetails.Add(instanceId, instanceBasicAuth);
+                Preferences.Set(Utils.Utils.STORAGE_KEYS.INSTANCE_CREDENTIALS.ToString(), JsonConvert.SerializeObject(cachedInstanceDetails));
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Error while caching Instance logins: " + ex.Message);
+            }
         }
     }
 }

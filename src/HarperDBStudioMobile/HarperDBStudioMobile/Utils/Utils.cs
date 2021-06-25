@@ -12,6 +12,15 @@ namespace HarperDBStudioMobile.Utils
         public static string HARPERDB_INSTANCE_INTIAL_ROOT_OWNER = "";
         public static string BASE_BASIC_AUTH { get; set; }
         public static string INSTANCE_BASIC_AUTH { get; set; }
+        public enum STORAGE_KEYS
+        {
+            BASE_EMAIL,
+            BASE_PASSWORD,
+            LOGGED_IN_USER_ORGS,
+            INSTANCE_MODELS,
+            INSTANCE_CREDENTIALS,
+            SCHEMA_DATA
+        }
         public enum TABLE_RECORD_MODES
         {
             Edit,
@@ -45,9 +54,9 @@ namespace HarperDBStudioMobile.Utils
         }
 
 
-        public static string base_username = DummyDataClass.base_username;
-        public static string base_password = DummyDataClass.base_password;
-        public static string instance_username = DummyDataClass.instance_username;
-        public static string instance_password = DummyDataClass.instance_password;
+        //public static string base_username = DummyDataClass.base_username;
+        //public static string base_password = DummyDataClass.base_password;
+        //public static string instance_username = DummyDataClass.instance_username;
+        //public static string instance_password = DummyDataClass.instance_password;
     }
 }

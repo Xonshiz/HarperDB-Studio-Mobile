@@ -9,6 +9,8 @@ namespace HarperDBStudioMobile.Models
         public static string Firstname { get; set; }
         public static string Lastname { get; set; }
         public static string Email { get; set; }
+        public static string LoginEmail { get; set; }
+        public static string LoginPassword { get; set; }
         public static string UserId { get; set; }
         public static string PrimaryCustomerId { get; set; }
         public static object EmailBounced { get; set; }
