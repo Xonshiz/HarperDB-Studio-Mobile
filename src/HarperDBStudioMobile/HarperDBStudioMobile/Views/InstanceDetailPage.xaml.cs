@@ -48,6 +48,7 @@ namespace HarperDBStudioMobile.Views
         public InstanceDetailPage()
         {
             InitializeComponent();
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             schemaPicker.ItemsSource = _schemaList;
             tablePicker.ItemsSource = _schemaTableList;
             this.GetSchemaDetails();
@@ -197,7 +198,7 @@ namespace HarperDBStudioMobile.Views
             var instanceSchemaClient = RestService.For<IGenericRestClient<string, RequestSqlActionModel>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
             try
             {
-                _currentTableDataList.Clear();
+                
                 var instanceSchemaTableData = await instanceSchemaClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, requestSqlActionModel);
                 if (instanceSchemaTableData != null && instanceSchemaTableData.IsSuccessStatusCode && instanceSchemaTableData.Content != null)
                 {
@@ -207,46 +208,7 @@ namespace HarperDBStudioMobile.Views
                         attributes.Add(attribute.attribute.ToString());
                     }
 
-                    var _jobj = Newtonsoft.Json.Linq.JArray.Parse(instanceSchemaTableData.Content.ToString());
-
-                    foreach (var item in _jobj)
-                    {
-                        var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
-                        Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
-                        foreach (var dataRow in parsedString)
-                        {
-                            _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
-
-                        }
-                        _currentTableDataList.Add(_currentTableData);
-                    }
-
-                    currentTableDataList = _currentTableDataList;
-                    this.GenerateGridColumns();
-                    int recordCount = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count;
-                    if (Convert.ToInt16(this.currentPageLabel.Text) <= recordCount)
-                    {
-                        this.previousPageButton.IsEnabled = false;
-                        this.nextPageButton.IsEnabled = false;
-                    }
-                    if (recordCount == 0)
-                    {
-                        this.totalPageLabel.Text = "0";
-                        this.previousPageButton.IsEnabled = false;
-                        this.nextPageButton.IsEnabled = false;
-                    } else
-                    {
-                        this.totalPageLabel.Text = Convert.ToInt16(((recordCount - 1) / 10) + 1).ToString();
-                        if (Convert.ToInt16(this.totalPageLabel.Text) > 1)
-                        {
-                            this.previousPageButton.IsEnabled = true;
-                            this.nextPageButton.IsEnabled = true;
-                        } else
-                        {
-                            this.previousPageButton.IsEnabled = false;
-                            this.nextPageButton.IsEnabled = false;
-                        }
-                    }
+                    this.PopulateTableData(instanceSchemaTableData.Content.ToString());
                     if (switchEditor)
                     {
                         //Make Editor HIDDEN and READONLY.
@@ -261,6 +223,53 @@ namespace HarperDBStudioMobile.Views
             catch (Exception ex)
             {
                 await DisplayAlert("Error!", ex.Message, "OK");
+            }
+        }
+
+        void PopulateTableData(string data)
+        {
+            _currentTableDataList.Clear();
+            var _jobj = Newtonsoft.Json.Linq.JArray.Parse(data);
+
+            foreach (var item in _jobj)
+            {
+                var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
+                Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
+                foreach (var dataRow in parsedString)
+                {
+                    _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+
+                }
+                _currentTableDataList.Add(_currentTableData);
+            }
+
+            currentTableDataList = _currentTableDataList;
+            this.GenerateGridColumns();
+            int recordCount = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count;
+            if (Convert.ToInt16(this.currentPageLabel.Text) <= recordCount)
+            {
+                this.previousPageButton.IsEnabled = false;
+                this.nextPageButton.IsEnabled = false;
+            }
+            if (recordCount == 0)
+            {
+                this.totalPageLabel.Text = "0";
+                this.previousPageButton.IsEnabled = false;
+                this.nextPageButton.IsEnabled = false;
+            }
+            else
+            {
+                this.totalPageLabel.Text = Convert.ToInt16(((recordCount - 1) / 10) + 1).ToString();
+                if (Convert.ToInt16(this.totalPageLabel.Text) > 1)
+                {
+                    this.previousPageButton.IsEnabled = true;
+                    this.nextPageButton.IsEnabled = true;
+                }
+                else
+                {
+                    this.previousPageButton.IsEnabled = false;
+                    this.nextPageButton.IsEnabled = false;
+                }
             }
         }
 
@@ -376,6 +385,23 @@ namespace HarperDBStudioMobile.Views
             {
                 //We'll cache things.
                 this.offlineOperationStrings.Add(cleanString);
+                this.PopulateTableData($"[{editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"')}]");
+                //_currentTableDataList.Clear();
+                //var _jobj = Newtonsoft.Json.Linq.JArray.Parse($"[{editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"')}]");
+
+                //foreach (var item in _jobj)
+                //{
+                //    var parsedString = Newtonsoft.Json.Linq.JObject.Parse(item.ToString());
+                //    Dictionary<string, string> _currentTableData = new Dictionary<string, string>() { };
+                //    foreach (var dataRow in parsedString)
+                //    {
+                //        _currentTableData.Add(dataRow.Key, dataRow.Value.ToString());
+
+                //    }
+                //    _currentTableDataList.Add(_currentTableData);
+                //}
+
+                this.SwitchEditTableCard(false);
             } else
             {
                 var editSchemaDetailsClient = RestService.For<IGenericRestClient<string, string>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
@@ -464,6 +490,22 @@ namespace HarperDBStudioMobile.Views
             {
                 this._offset += 10;
                 this.GetTableData();
+            }
+        }
+
+        void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            var access = e.NetworkAccess;
+            var profiles = e.ConnectionProfiles;
+            var current = Connectivity.NetworkAccess;
+
+            //If NO ACCESS, then we have offline mode.
+            this._isOffileMode = current == NetworkAccess.None;
+            noNetworkLabel.IsVisible = this._isOffileMode;
+
+            if (!this._isOffileMode && offlineOperationStrings.Count > 0)
+            {
+                this.SendCachedOperations();
             }
         }
     }

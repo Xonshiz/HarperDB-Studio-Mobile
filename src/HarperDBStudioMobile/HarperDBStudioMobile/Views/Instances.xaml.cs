@@ -22,7 +22,6 @@ namespace HarperDBStudioMobile.Views
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
 
         ObservableCollection<InstanceModel> instanceModels = new ObservableCollection<InstanceModel>() { };
-        //List<Dictionary<string, string>> cachedInstanceDetails = new List<Dictionary<string, string>>() { };
         Dictionary<string, string> cachedInstanceDetails = new Dictionary<string, string>() { };
 
         public Instances()

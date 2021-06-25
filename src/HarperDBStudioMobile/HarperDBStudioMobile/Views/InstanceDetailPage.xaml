@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
     x:Class="HarperDBStudioMobile.Views.InstanceDetailPage" BackgroundColor="{StaticResource AppBackgroundColor}">
     <StackLayout VerticalOptions="FillAndExpand">
+        <Label x:Name="noNetworkLabel" HorizontalOptions="CenterAndExpand" Text="You're Currently offline." FontSize="Header" TextColor="Red" FontAttributes="Bold" IsVisible="False" />
         <StackLayout x:Name="pickerStackLayout"
                      Margin="20, 20, 20, 0">
             <Picker x:Name="schemaPicker"

@@ -52,11 +52,5 @@ namespace HarperDBStudioMobile.Utils
             var authData = string.Format("{0}:{1}", username, password);
             return $"Basic {Convert.ToBase64String(Encoding.UTF8.GetBytes(authData))}";
         }
-
-
-        //public static string base_username = DummyDataClass.base_username;
-        //public static string base_password = DummyDataClass.base_password;
-        //public static string instance_username = DummyDataClass.instance_username;
-        //public static string instance_password = DummyDataClass.instance_password;
     }
 }
