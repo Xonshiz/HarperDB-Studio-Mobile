@@ -16,11 +16,12 @@ using Xamarin.Forms.Xaml;
 
 namespace HarperDBStudioMobile.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+    //[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
         IRestClient restClient;
         RequestGetUserModel requestGetUserModel;
+        private bool isCachedLogin = false;
 
         public ICommand RememberMeTapped { get; set; }
 
@@ -45,7 +46,11 @@ namespace HarperDBStudioMobile.Views
             {
                 user_email.Text = LoggedInUser.LoginEmail;
                 user_password.Text = LoggedInUser.LoginPassword;
+                this.isCachedLogin = true;
                 this.LoginUser();
+            } else
+            {
+                this.isCachedLogin = false;
             }
         }
 
@@ -62,6 +67,9 @@ namespace HarperDBStudioMobile.Views
 
         private async void LoginUser()
         {
+            this.loadingFrame.IsVisible = true;
+            this.loginFrame.IsVisible = false;
+
             requestGetUserModel.password = user_password.Text;
             requestGetUserModel.email = user_email.Text;
             requestGetUserModel.loggingIn = true;
@@ -69,6 +77,11 @@ namespace HarperDBStudioMobile.Views
             try
             {
                 var loginInfo = await restClient.GetUser(requestGetUserModel);
+
+                this.loadingFrame.IsVisible = false;
+                this.loginFrame.IsVisible = true;
+
+
                 if (loginInfo != null && loginInfo.IsSuccessStatusCode && loginInfo.Content.Body != null && loginInfo.Content.Body.user_id != null)
                 {
                     //Success
@@ -99,7 +112,10 @@ namespace HarperDBStudioMobile.Views
                         }
                     }
 
-                    await DisplayAlert("Success", "You've Logged in " + loginInfo.Content.Body.firstname, "OK");
+                    if (!this.isCachedLogin)
+                    {
+                        await DisplayAlert("Success", "You've Logged in " + loginInfo.Content.Body.firstname, "OK");
+                    }
                     await Shell.Current.GoToAsync($"{nameof(Organizations)}");
                 }
                 else

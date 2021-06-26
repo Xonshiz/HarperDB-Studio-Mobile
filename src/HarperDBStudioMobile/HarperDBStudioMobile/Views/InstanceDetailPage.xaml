@@ -68,6 +68,16 @@
                     </StackLayout>
                 </ScrollView>
             </Frame>
+            <StackLayout x:Name="LoadingStackLayout">
+            <Frame x:Name="loadingFrame"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Margin="20"
+                BackgroundColor="{StaticResource FrameBackgroundColor}">
+                <Label x:Name="loadingBox" Text="Working..." />
+            </Frame>
+            </StackLayout>
+
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="CenterAndExpand">
                 <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">

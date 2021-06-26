@@ -69,6 +69,8 @@ namespace HarperDBStudioMobile.Views
 
         private async void GetInstanceDetails()
         {
+            this.SwitchLoadingMode(true, "Getting Instances...");
+
             RequestGetInstancesModel requestGetInstancesModel = new RequestGetInstancesModel();
             requestGetInstancesModel.customer_id = LoggedInUserCurrentSelections.current_organization_customer_id;
             requestGetInstancesModel.user_id = LoggedInUser.UserId;
@@ -104,6 +106,10 @@ namespace HarperDBStudioMobile.Views
                 await DisplayAlert("Failure", ex.Message, "OK");
                 return;
             }
+            finally
+            {
+                this.SwitchLoadingMode(false, String.Empty);
+            }
         }
 
         private void ReadInstancesFromCache()
@@ -136,6 +142,8 @@ namespace HarperDBStudioMobile.Views
             }
             try
             {
+                this.SwitchLoadingMode(true, "Verifying Instance Login...");
+
                 var basicAuth = Utils.Utils.GetBasicAuthString(instance_username.Text, instance_password.Text);
                 LoggedInUserCurrentSelections.current_instance_auth = basicAuth;
 
@@ -156,6 +164,10 @@ namespace HarperDBStudioMobile.Views
             catch (Exception ex)
             {
                 await DisplayAlert("Error!", ex.Message, "OK");
+            }
+            finally
+            {
+                this.SwitchLoadingMode(false, String.Empty);
             }
         }
 
@@ -192,6 +204,11 @@ namespace HarperDBStudioMobile.Views
             {
                 Console.Write("Error while caching Instance logins: " + ex.Message);
             }
+        }
+
+        void SwitchLoadingMode(bool isLoading, string dataToShow)
+        {
+            loadingFrame.IsVisible = isLoading;
         }
     }
 }

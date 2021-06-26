@@ -14,7 +14,7 @@ namespace HarperDBStudioMobile.Views
         ObservableCollection<OrgModel> orgModels = new ObservableCollection<OrgModel>() { };
         public ICommand CarouselItemTapped{ get; set; }
 
-    public Organizations()
+        public Organizations()
         {
             InitializeComponent();
             this.UpdateOrgModelList();

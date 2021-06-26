@@ -23,7 +23,6 @@ namespace HarperDBStudioMobile.Views
     {
         private string currentRowOperation, currentRecordHashValue = String.Empty;
         private bool isAddNewRow, isDeleteRow, _isOffileMode = false;
-        private bool _isRefreshing;
         private string hashAttribute = String.Empty;
         private int _currentSelectedSchema, _currentSelectedTable;
         private int _offset = 0;
@@ -83,7 +82,6 @@ namespace HarperDBStudioMobile.Views
 
         private void PopulateTablePicker(string currentSchemaName)
         {
-            //this.CacheTablePickerDetails();
             _schemaTableList.Clear();
             foreach (var table in instanceSchemaDict[currentSchemaName])
             {
@@ -94,6 +92,8 @@ namespace HarperDBStudioMobile.Views
 
         private async void GetSchemaDetails()
         {
+            this.SwitchLoadingMode(true, "Getting Schema Details...");
+
             requestOperationsModel.operation = Utils.Utils.INSTANCE_OPERATIONS.describe_all.ToString();
             var instanceSchemaClient = RestService.For<IGenericRestClient<string, RequestOperationsModel>>(LoggedInUserCurrentSelections.INSTANCE_BASE_URL);
             try
@@ -124,6 +124,10 @@ namespace HarperDBStudioMobile.Views
             {
                 await DisplayAlert("Error!", ex.Message, "OK");
             }
+            //finally
+            //{
+            //    this.SwitchLoadingMode(false, String.Empty);
+            //}
 
         }
 
@@ -146,6 +150,7 @@ namespace HarperDBStudioMobile.Views
 
         private void GenerateGridColumns()
         {
+            this.SwitchLoadingMode(true, "Generating Columns");
             gridStackLayout.Children.Clear();
 
             Dictionary<string, string> tempDict = attributes.ToDictionary(x => x, x => x);
@@ -159,6 +164,7 @@ namespace HarperDBStudioMobile.Views
                 gridStackLayout.Children.Add(scrollingGridView);
                 scrollingGridView.GridRowTapped += ScrollingGridView_GridRowTapped;
             }
+            //this.SwitchLoadingMode(false, String.Empty);
         }
 
         private async void ScrollingGridView_GridRowTapped(object sender, RowTappedEventArgs e)
@@ -192,6 +198,8 @@ namespace HarperDBStudioMobile.Views
 
         async void GetTableData(bool switchEditor = false)
         {
+            this.SwitchLoadingMode(true, "Getting Table Data...");
+
             await this.DescribeTable();
             requestSqlActionModel.operation = Utils.Utils.INSTANCE_OPERATIONS.sql.ToString();
             //SELECT * FROM `newSchema`.`newTable`  OFFSET 0 FETCH 20
@@ -225,11 +233,15 @@ namespace HarperDBStudioMobile.Views
             {
                 await DisplayAlert("Error!", ex.Message, "OK");
             }
+            //finally {
+            //    this.SwitchLoadingMode(false, String.Empty);
+            //}
         }
 
         void PopulateTableData(string data)
         {
-            //_currentTableDataList.Clear();
+            this.SwitchLoadingMode(true, "Populating Table Data...");
+
             var _jobj = Newtonsoft.Json.Linq.JArray.Parse(data);
 
             foreach (var item in _jobj)
@@ -272,10 +284,13 @@ namespace HarperDBStudioMobile.Views
                     this.nextPageButton.IsEnabled = false;
                 }
             }
+            this.SwitchLoadingMode(false, String.Empty);
         }
 
         async Task<string> GetEditTableData(string hashValue)
         {
+            this.SwitchLoadingMode(true, "Getting Row Details...");
+
             requestGetRecordDetailsModel.operation = Utils.Utils.INSTANCE_OPERATIONS.search_by_hash.ToString();
             requestGetRecordDetailsModel.schema = this._schemaList[_currentSelectedSchema];
             requestGetRecordDetailsModel.table = this._schemaTableList[_currentSelectedTable];
@@ -300,10 +315,16 @@ namespace HarperDBStudioMobile.Views
                 await DisplayAlert("Error!", ex.Message, "OK");
                 return String.Empty;
             }
+            finally
+            {
+                this.SwitchLoadingMode(false, String.Empty);
+            }
         }
 
         async Task<bool> DescribeTable()
         {
+            this.SwitchLoadingMode(true, "Getting Table Structure...");
+
             requestDescribeTableModel.operation = Utils.Utils.INSTANCE_OPERATIONS.describe_table.ToString();
             requestDescribeTableModel.schema = this._schemaList[_currentSelectedSchema];
             requestDescribeTableModel.table = this._schemaTableList[_currentSelectedTable];
@@ -338,6 +359,7 @@ namespace HarperDBStudioMobile.Views
 
         void Update_Table_Record(System.Object sender, System.EventArgs e)
         {
+            this.SwitchEditTableCard(false, editRecordEditor.Text);
             if (!this.isAddNewRow && !this.isDeleteRow)
             {
                 this.currentRowOperation = Utils.Utils.INSTANCE_OPERATIONS.update.ToString();
@@ -345,7 +367,6 @@ namespace HarperDBStudioMobile.Views
             this.TableRowEditCalls(this.currentRowOperation);
             this.isAddNewRow = false;
             this.isDeleteRow = false;
-            //updateRecordButton.Text = "Update";
         }
 
         private async void SendCachedOperations()
@@ -376,6 +397,8 @@ namespace HarperDBStudioMobile.Views
 
         async void TableRowEditCalls(string operation, string cachedCleanString = "")
         {
+            this.SwitchLoadingMode(true, $"Performing {operation} operation...");
+
             string cleanString = "{\"operation\":\"" + operation + "\",\"schema\":\"" + this._schemaList[_currentSelectedSchema] + "\",\"table\":\"" + this._schemaTableList[_currentSelectedTable] + "\",\"records\":[" + editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"') + "]}";
 
             if (this.isDeleteRow && !String.IsNullOrWhiteSpace(this.currentRecordHashValue))
@@ -398,6 +421,10 @@ namespace HarperDBStudioMobile.Views
                 {
 
                 }
+                finally
+                {
+                    this.SwitchLoadingMode(false, String.Empty);
+                }
                 this.PopulateTableData($"[{editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"')}]");
 
                 this.SwitchEditTableCard(false);
@@ -419,6 +446,10 @@ namespace HarperDBStudioMobile.Views
                 catch (Exception ex)
                 {
                     await DisplayAlert("Error!", ex.Message, "OK");
+                }
+                finally
+                {
+                    this.SwitchLoadingMode(false, String.Empty);
                 }
             }
         }
@@ -524,6 +555,13 @@ namespace HarperDBStudioMobile.Views
             {
                 this.SendCachedOperations();
             }
+        }
+
+        void SwitchLoadingMode(bool isLoading, string dataToShow)
+        {
+            LoadingStackLayout.IsVisible = isLoading;
+            gridDataFrame.IsVisible = !isLoading;
+            loadingBox.Text = dataToShow;
         }
     }
 }

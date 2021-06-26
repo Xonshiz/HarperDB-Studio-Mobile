@@ -24,7 +24,17 @@
                 </StackLayout>
             </Frame>
         </StackLayout>
-        <StackLayout>
+        <StackLayout HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="CenterAndExpand">
+            <Frame x:Name="loadingFrame"
+                   IsVisible="False"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   Margin="20"
+                   BackgroundColor="{StaticResource FrameBackgroundColor}">
+                <Label x:Name="loadingBox" Text="Fething Details..." />
+            </Frame>
+
             <CarouselView x:Name="InstanceCarousel" PositionChanged="InstanceCarousel_PositionChanged">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
