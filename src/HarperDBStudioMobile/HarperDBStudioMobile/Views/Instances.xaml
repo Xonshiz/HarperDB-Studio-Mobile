@@ -3,7 +3,22 @@
     x:Name="currentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:HarperDBStudioMobile.ViewModels"
-    x:Class="HarperDBStudioMobile.Views.Instances" BackgroundColor="{StaticResource AppBackgroundColor}">
+    x:Class="HarperDBStudioMobile.Views.Instances" BackgroundColor="{StaticResource AppBackgroundColor}"
+    Title="Instances">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Resources"
+                     x:Name="resourcesToolbarItem"
+                     Clicked="resourcesToolbarItem_Clicked"
+                     IconImageSource="example_icon.png"
+                     Order="Secondary"
+                     Priority="0" />
+        <ToolbarItem Text="Logout"
+                     x:Name="lougoutToolBarItem"
+                     Clicked="lougoutToolBarItem_Clicked"
+                     IconImageSource="example_icon.png"
+                     Order="Secondary"
+                     Priority="0" />
+    </ContentPage.ToolbarItems>
     <StackLayout x:Name="mainStackLayout">
         <StackLayout x:Name="InstanceLoginStackLayout"
                      IsVisible="False"
@@ -17,10 +32,10 @@
                    VerticalOptions="CenterAndExpand"
                    BackgroundColor="{StaticResource FrameBackgroundColor}">
                 <StackLayout>
-                    <Entry x:Name="instance_username" />
-                    <Entry x:Name="instance_password" IsPassword="True" />
-                    <Button x:Name="instance_submit_button" Text="Submit" Clicked="instance_submit_button_Clicked" Margin="0,20,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff" />
-                    <Button x:Name="instance_cancel_button" Text="Cancel" Clicked="instance_cancel_button_Clicked" Margin="0,10,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"/>
+                    <Entry x:Name="instance_username"  TabIndex="0"/>
+                    <Entry x:Name="instance_password" IsPassword="True"  TabIndex="1"/>
+                    <Button x:Name="instance_submit_button" Text="Submit" Clicked="instance_submit_button_Clicked" Margin="0,20,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"  TabIndex="2"/>
+                    <Button x:Name="instance_cancel_button" Text="Cancel" Clicked="instance_cancel_button_Clicked" Margin="0,10,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"  TabIndex="3"/>
                 </StackLayout>
             </Frame>
         </StackLayout>
@@ -29,7 +44,6 @@
             <Frame x:Name="loadingFrame"
                    IsVisible="False"
                    HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="CenterAndExpand"
                    Margin="20"
                    BackgroundColor="{StaticResource FrameBackgroundColor}">
                 <Label x:Name="loadingBox" Text="Fething Details..." />

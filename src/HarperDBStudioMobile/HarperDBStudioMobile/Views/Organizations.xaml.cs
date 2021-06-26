@@ -5,6 +5,7 @@ using System.Windows.Input;
 using HarperDBStudioMobile.Interfaces;
 using HarperDBStudioMobile.Models;
 using HarperDBStudioMobile.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HarperDBStudioMobile.Views
@@ -47,9 +48,14 @@ namespace HarperDBStudioMobile.Views
             base.OnAppearing();
         }
 
-        private void GetOrganizations()
+        void resourcesToolbarItem_Clicked(System.Object sender, System.EventArgs e)
         {
+            Utils.Utils.OpenResourcesWebPage();
+        }
 
+        void lougoutToolBarItem_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Utils.Utils.LogoutUser();
         }
     }
 }

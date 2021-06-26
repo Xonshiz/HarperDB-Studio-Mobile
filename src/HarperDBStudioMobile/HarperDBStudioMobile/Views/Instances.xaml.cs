@@ -34,7 +34,7 @@ namespace HarperDBStudioMobile.Views
             instance_password.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
 
             InstanceCarousel.ItemsSource = instanceModels;
-            InstanceCarousel.TabIndex = 0;
+            //InstanceCarousel.TabIndex = 0;
 
             //Do this when no Internet.
             //ReadInstancesFromCache();
@@ -142,6 +142,7 @@ namespace HarperDBStudioMobile.Views
             }
             try
             {
+                InstanceLoginStackLayout.IsVisible = false;
                 this.SwitchLoadingMode(true, "Verifying Instance Login...");
 
                 var basicAuth = Utils.Utils.GetBasicAuthString(instance_username.Text, instance_password.Text);
@@ -154,7 +155,11 @@ namespace HarperDBStudioMobile.Views
                 {
                     //Can add the auth to DICTIONARY here.
                     this.CacheInstanceAuthDetails(this.currentInstanceId, basicAuth);
-                    await DisplayAlert("Success!", instanceAuthVerification.Content.username, "OK");
+                    await DisplayAlert("Success!", $"Welcome {instanceAuthVerification.Content.username}", "OK");
+
+                    InstanceCarousel.IsVisible = true;
+                    this.SwitchLoadingMode(false, String.Empty);
+
                     this.PushToInstanceDetails();
                 } else
                 {
@@ -164,10 +169,6 @@ namespace HarperDBStudioMobile.Views
             catch (Exception ex)
             {
                 await DisplayAlert("Error!", ex.Message, "OK");
-            }
-            finally
-            {
-                this.SwitchLoadingMode(false, String.Empty);
             }
         }
 
@@ -209,6 +210,16 @@ namespace HarperDBStudioMobile.Views
         void SwitchLoadingMode(bool isLoading, string dataToShow)
         {
             loadingFrame.IsVisible = isLoading;
+        }
+
+        void resourcesToolbarItem_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Utils.Utils.OpenResourcesWebPage();
+        }
+
+        void lougoutToolBarItem_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Utils.Utils.LogoutUser();
         }
     }
 }

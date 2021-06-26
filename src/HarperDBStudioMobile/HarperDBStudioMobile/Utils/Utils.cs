@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace HarperDBStudioMobile.Utils
 {
@@ -52,6 +54,26 @@ namespace HarperDBStudioMobile.Utils
         {
             var authData = string.Format("{0}:{1}", username, password);
             return $"Basic {Convert.ToBase64String(Encoding.UTF8.GetBytes(authData))}";
+        }
+
+        public static async void OpenResourcesWebPage()
+        {
+            try
+            {
+                await Launcher.OpenAsync(new Uri("https://studio.harperdb.io/resources/"));
+            }
+            catch (Exception ex)
+            {
+                // An unexpected error occured. No browser may be installed on the device.
+                Console.Write("Failed To Open Browser: " + ex.Message);
+            }
+        }
+
+        public static void LogoutUser()
+        {
+            Preferences.Clear();
+            //Discard All pages and move to login screen.
+            Shell.Current.Navigation.PopToRootAsync();
         }
     }
 }

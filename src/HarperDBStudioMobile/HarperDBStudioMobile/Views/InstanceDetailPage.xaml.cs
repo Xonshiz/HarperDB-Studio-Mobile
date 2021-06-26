@@ -25,7 +25,7 @@ namespace HarperDBStudioMobile.Views
         private bool isAddNewRow, isDeleteRow, _isOffileMode = false;
         private string hashAttribute = String.Empty;
         private int _currentSelectedSchema, _currentSelectedTable;
-        private int _offset = 0;
+        private int _offset, totalRecords = 0;
 
         RequestOperationsModel requestOperationsModel = new RequestOperationsModel();
         ObservableCollection<string> _schemaList = new ObservableCollection<string>();
@@ -88,6 +88,7 @@ namespace HarperDBStudioMobile.Views
                 _schemaTableList.Add(table.Key);
             }
             tablePicker.SelectedIndex = 0;
+            //this.totalRecords = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count;
         }
 
         private async void GetSchemaDetails()
@@ -191,7 +192,7 @@ namespace HarperDBStudioMobile.Views
                 return;
 
             this._currentSelectedTable = selectedIndex;
-
+            this.totalRecords = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count;
             this.GetTableData();
             
         }
@@ -258,7 +259,9 @@ namespace HarperDBStudioMobile.Views
 
             currentTableDataList = _currentTableDataList;
             this.GenerateGridColumns();
-            int recordCount = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count;
+            int recordCount = this.totalRecords;
+            //int recordCount = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count;
+            TotalRecordLabel.Text = $"{this._schemaList[_currentSelectedSchema]} > {this._schemaTableList[_currentSelectedTable]} > {Convert.ToString(recordCount)} records";
             if (Convert.ToInt16(this.currentPageLabel.Text) <= recordCount)
             {
                 this.previousPageButton.IsEnabled = false;
@@ -436,6 +439,17 @@ namespace HarperDBStudioMobile.Views
                     var editTableSchema = await editSchemaDetailsClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, cleanString);
                     if (editTableSchema != null && editTableSchema.IsSuccessStatusCode && editTableSchema.Content != null)
                     {
+                        switch (operation)
+                        {
+                            case "insert":
+                                this.totalRecords = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count + 1;
+                                break;
+                            case "delete":
+                                this.totalRecords = this.instanceSchemaDict[this._schemaList[_currentSelectedSchema]][this._schemaTableList[_currentSelectedTable]].record_count - 1;
+                                break;
+                            default:
+                                break;
+                        }
                         this.GetTableData(true);
                     }
                     else
@@ -463,7 +477,9 @@ namespace HarperDBStudioMobile.Views
         void SwitchEditTableCard(bool editFlag, string dataToSet = "")
         {
             editRecordFrame.IsVisible = editFlag;
+            TotalRecordLabel.IsVisible = !editFlag;
             gridDataFrame.IsVisible = !editFlag;
+            NavigationBar.IsVisible = !editFlag;
             tableMenuStackLayout.IsVisible = !editFlag;
             editRecordEditor.IsReadOnly = !editFlag;
             editRecordEditor.Text = dataToSet;
@@ -561,7 +577,19 @@ namespace HarperDBStudioMobile.Views
         {
             LoadingStackLayout.IsVisible = isLoading;
             gridDataFrame.IsVisible = !isLoading;
+            TotalRecordLabel.IsVisible = !isLoading;
+            NavigationBar.IsVisible = !isLoading;
             loadingBox.Text = dataToShow;
+        }
+
+        void resourcesToolbarItem_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Utils.Utils.OpenResourcesWebPage();
+        }
+
+        void lougoutToolBarItem_Clicked(System.Object sender, System.EventArgs e)
+        {
+            Utils.Utils.LogoutUser();
         }
     }
 }

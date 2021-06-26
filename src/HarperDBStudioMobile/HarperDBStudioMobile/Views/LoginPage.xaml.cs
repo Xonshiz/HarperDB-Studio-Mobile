@@ -28,6 +28,14 @@ namespace HarperDBStudioMobile.Views
         public LoginPage()
         {
             InitializeComponent();
+            //ShellSection shell_section = new ShellSection
+            //{
+            //    Title = "home",
+            //};
+            //shell_section.Items.Add(new ShellContent() { Content = new AboutPage() });
+
+            //Shell.Current.Items.Add(shell_section);
+
             var rememberMeLabelTap = new TapGestureRecognizer();
             rememberMeLabelTap.Tapped += (s, e) =>
             {
@@ -36,7 +44,7 @@ namespace HarperDBStudioMobile.Views
             remember_me_label.GestureRecognizers.Add(rememberMeLabelTap);
 
             restClient = RestService.For<IRestClient>(Utils.Utils.BASE_API_URL);
-            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
+            //Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
             this.requestGetUserModel = new RequestGetUserModel();
             user_email.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
             user_password.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
@@ -46,6 +54,7 @@ namespace HarperDBStudioMobile.Views
             {
                 user_email.Text = LoggedInUser.LoginEmail;
                 user_password.Text = LoggedInUser.LoginPassword;
+                remember_me_checkbox.IsChecked = true;
                 this.isCachedLogin = true;
                 this.LoginUser();
             } else
@@ -116,6 +125,10 @@ namespace HarperDBStudioMobile.Views
                     {
                         await DisplayAlert("Success", "You've Logged in " + loginInfo.Content.Body.firstname, "OK");
                     }
+                    user_email.Text = String.Empty;
+                    user_password.Text = String.Empty;
+                    remember_me_checkbox.IsChecked = false;
+                    //this.PopulateFlyoutMenu();
                     await Shell.Current.GoToAsync($"{nameof(Organizations)}");
                 }
                 else
@@ -131,6 +144,72 @@ namespace HarperDBStudioMobile.Views
             {
                 await DisplayAlert("Failure", ex.Message, "OK");
                 return;
+            }
+        }
+
+        private void PopulateFlyoutMenu()
+        {
+            Shell.Current.Items.Clear();
+            List<string> listOfMenuItems = new List<string>() { "About", "Resources", "Current Page" };
+            foreach (var menuItem in listOfMenuItems)
+            {
+                ShellSection shellSection = this.CreateShellSection(menuItem);
+                this.AddSectionInstances(menuItem, shellSection);
+                Shell.Current.Items.Add(shellSection);
+            }
+
+            
+            Shell.Current.MenuItemTemplate = new DataTemplate(() => {
+                // A Label displays the list item text
+                Label label = new Label();
+                label.Text = "Hello";
+                label.SetBinding(Label.TextProperty, ".");
+
+                // A ViewCell serves as the DataTemplate
+                ViewCell viewCell = new ViewCell
+                {
+                    View = label
+                };
+
+                // Add a MenuItem instance to the ContextActions
+                MenuItem menuItem = new MenuItem
+                {
+                    Text = "Context Menu Option"
+                };
+                viewCell.ContextActions.Add(menuItem);
+
+                // The function returns the custom ViewCell
+                // to the DataTemplate constructor
+                return viewCell;
+            });
+        }
+
+        private ShellSection CreateShellSection(string sectionTitle)
+        {
+            return new ShellSection
+            {
+                Title = sectionTitle,
+            };
+        }
+
+        private void AddSectionInstances(string typeOfPage, ShellSection shellSection)
+        {
+            switch (typeOfPage)
+            {
+                case "About":
+                    shellSection.Items.Add(new ShellContent() { Content = new AboutPage() });
+                    break;
+                case "Login":
+                    shellSection.Items.Add(new ShellContent() { Content = new LoginPage() });
+                    break;
+                case "Resources":
+                    shellSection.Items.Add(new ShellContent() { Content = new ResourcesPage() });
+                    break;
+                case "Current Page":
+                    shellSection.Items.Add(new ShellContent() { Content = new Organizations() });
+                    break;
+                default:
+                    break;
             }
         }
     }

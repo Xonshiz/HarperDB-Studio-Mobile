@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using Refit;
 using System;
 using System.Collections.Generic;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HarperDBStudioMobile
@@ -21,11 +22,14 @@ namespace HarperDBStudioMobile
             Routing.RegisterRoute(nameof(Organizations), typeof(Organizations));
             Routing.RegisterRoute(nameof(Instances), typeof(Instances));
             Routing.RegisterRoute(nameof(InstanceDetailPage), typeof(InstanceDetailPage));
-            
+            Routing.RegisterRoute(nameof(ResourcesPage), typeof(ResourcesPage));
+            //mainShell.CurrentItem = LoginPageShell;
+
         }
 
-        private async void OnMenuItemClicked(object sender, EventArgs e)
+        private async void OnLogoutClicked(object sender, EventArgs e)
         {
+            Preferences.Clear();
             await Shell.Current.GoToAsync("//LoginPage");
         }
     }

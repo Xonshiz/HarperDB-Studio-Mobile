@@ -2,8 +2,22 @@
 <ContentPage x:Name="currentPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:HarperDBStudioMobile.ViewModels"
-    x:Class="HarperDBStudioMobile.Views.Organizations" BackgroundColor="{StaticResource AppBackgroundColor}">
-
+    x:Class="HarperDBStudioMobile.Views.Organizations" BackgroundColor="{StaticResource AppBackgroundColor}"
+             Title="All Organizations" NavigationPage.HasBackButton="False">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Resources"
+                     x:Name="resourcesToolbarItem"
+                     Clicked="resourcesToolbarItem_Clicked"
+                     IconImageSource="example_icon.png"
+                     Order="Secondary"
+                     Priority="0" />
+        <ToolbarItem Text="Logout"
+                     x:Name="lougoutToolBarItem"
+                     Clicked="lougoutToolBarItem_Clicked"
+                     IconImageSource="example_icon.png"
+                     Order="Secondary"
+                     Priority="0" />
+    </ContentPage.ToolbarItems>
     <CarouselView x:Name="MainCarousel">
     <CarouselView.ItemTemplate>
         <DataTemplate>
