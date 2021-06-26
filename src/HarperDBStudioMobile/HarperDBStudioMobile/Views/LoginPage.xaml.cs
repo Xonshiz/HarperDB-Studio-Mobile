@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -21,9 +22,18 @@ namespace HarperDBStudioMobile.Views
         IRestClient restClient;
         RequestGetUserModel requestGetUserModel;
 
+        public ICommand RememberMeTapped { get; set; }
+
         public LoginPage()
         {
             InitializeComponent();
+            var rememberMeLabelTap = new TapGestureRecognizer();
+            rememberMeLabelTap.Tapped += (s, e) =>
+            {
+                this.remember_me_checkbox.IsChecked = !this.remember_me_checkbox.IsChecked;
+            };
+            remember_me_label.GestureRecognizers.Add(rememberMeLabelTap);
+
             restClient = RestService.For<IRestClient>(Utils.Utils.BASE_API_URL);
             Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
             this.requestGetUserModel = new RequestGetUserModel();
