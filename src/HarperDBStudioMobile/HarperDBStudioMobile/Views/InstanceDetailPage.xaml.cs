@@ -47,6 +47,7 @@ namespace HarperDBStudioMobile.Views
         public InstanceDetailPage()
         {
             InitializeComponent();
+            addRowButton.IsEnabled = false;
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             this.CheckAndCallCachedOperations(true);
             schemaPicker.ItemsSource = _schemaList;
@@ -55,6 +56,7 @@ namespace HarperDBStudioMobile.Views
             editRecordEditor.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
             this.previousPageButton.IsEnabled = false;
             this.nextPageButton.IsEnabled = false;
+            addRowButton.IsEnabled = true;
         }
 
         private void CacheSchemaPickerDetails()
@@ -179,7 +181,7 @@ namespace HarperDBStudioMobile.Views
                 this.SwitchEditTableCard(true, editTableData);
                 this.currentRecordHashValue = e.hashValue;
                 deleteRecordButton.IsVisible = true;
-                updateRecordButton.Text = "Update";
+                //updateRecordButton.Text = "Update";
             }
         }
 
@@ -481,7 +483,7 @@ namespace HarperDBStudioMobile.Views
         void cancelEditRecordButton_Clicked(System.Object sender, System.EventArgs e)
         {
             this.SwitchEditTableCard(false);
-            updateRecordButton.Text = "Update";
+            //updateRecordButton.Text = "Update";
         }
 
         void SwitchEditTableCard(bool editFlag, string dataToSet = "")
@@ -509,7 +511,7 @@ namespace HarperDBStudioMobile.Views
             this.SwitchEditTableCard(true, Regex.Unescape(tempJsonString));
             this.isAddNewRow = true;
             deleteRecordButton.IsVisible = false;
-            updateRecordButton.Text = "Insert";
+            //updateRecordButton.Text = "Insert";
             this.currentRowOperation = Utils.Utils.INSTANCE_OPERATIONS.insert.ToString();
         }
 

@@ -6,15 +6,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:template="clr-namespace:HarperDBStudioMobile.Views"
              mc:Ignorable="d"
+             xmlns:customImage="clr-namespace:HarperDBStudioMobile.Utils"
              x:Class="HarperDBStudioMobile.Views.LoginPage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource AppBackgroundColor}"
               NavigationPage.HasBackButton="False">
-    <StackLayout>
+    <StackLayout Margin="20" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+        <ImageButton IsEnabled="False" CornerRadius="10" Source="{customImage:ImageResource HarperDBStudioMobile.Images.harperDB_logo.png}" BackgroundColor="{StaticResource AppBackgroundColor}"/>
         <Frame x:Name="loginFrame"
            HorizontalOptions="FillAndExpand"
-           Margin="20"
-           Padding="20,40,20,40"
            VerticalOptions="CenterAndExpand"
            BackgroundColor="{StaticResource FrameBackgroundColor}">
                 <StackLayout>

@@ -28,13 +28,6 @@ namespace HarperDBStudioMobile.Views
         public LoginPage()
         {
             InitializeComponent();
-            //ShellSection shell_section = new ShellSection
-            //{
-            //    Title = "home",
-            //};
-            //shell_section.Items.Add(new ShellContent() { Content = new AboutPage() });
-
-            //Shell.Current.Items.Add(shell_section);
 
             var rememberMeLabelTap = new TapGestureRecognizer();
             rememberMeLabelTap.Tapped += (s, e) =>
@@ -44,7 +37,6 @@ namespace HarperDBStudioMobile.Views
             remember_me_label.GestureRecognizers.Add(rememberMeLabelTap);
 
             restClient = RestService.For<IRestClient>(Utils.Utils.BASE_API_URL);
-            //Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
             this.requestGetUserModel = new RequestGetUserModel();
             user_email.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
             user_password.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
@@ -57,7 +49,8 @@ namespace HarperDBStudioMobile.Views
                 remember_me_checkbox.IsChecked = true;
                 this.isCachedLogin = true;
                 this.LoginUser();
-            } else
+            }
+            else
             {
                 this.isCachedLogin = false;
             }

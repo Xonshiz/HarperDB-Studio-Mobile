@@ -39,9 +39,21 @@
     <None Remove="Refit.Newtonsoft.Json" />
     <None Remove="Xamarin.Forms.DataGrid" />
     <None Remove="Syncfusion.Xamarin.SfDataGrid" />
+    <None Remove="Images\" />
+    <None Remove="Images\harperDB_logo.png" />
+    <None Remove="Images\outline_delete_forever_white_24dp.png" />
+    <None Remove="Images\outline_clear_white_24dp.png" />
+    <None Remove="Images\outline_save_white_24dp.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\harperDB_logo.png" />
+    <EmbeddedResource Include="Images\outline_delete_forever_white_24dp.png" />
+    <EmbeddedResource Include="Images\outline_clear_white_24dp.png" />
+    <EmbeddedResource Include="Images\outline_save_white_24dp.png" />
   </ItemGroup>
 </Project>

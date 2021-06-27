@@ -2,7 +2,9 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid" xmlns:syncfusion="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
-    x:Class="HarperDBStudioMobile.Views.InstanceDetailPage" BackgroundColor="{StaticResource AppBackgroundColor}"
+    x:Class="HarperDBStudioMobile.Views.InstanceDetailPage"
+    xmlns:customImage="clr-namespace:HarperDBStudioMobile.Utils"
+    BackgroundColor="{StaticResource AppBackgroundColor}"
     Title="Schema &amp; Tables">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Resources"
@@ -63,9 +65,9 @@
                         TabIndex="0">
 
                 </Editor>
-                <Button x:Name="updateRecordButton" Text="Update" Clicked="Update_Table_Record" BackgroundColor="#55c58f"  TabIndex="1"/>
-                <Button x:Name="deleteRecordButton" Text="Delete" Clicked="deleteRecordButton_Clicked" BackgroundColor="#ea4c89"  TabIndex="2"/>
-                <Button x:Name="cancelEditRecordButton" Text="Cancel" BackgroundColor="#212121" Clicked="cancelEditRecordButton_Clicked"  TabIndex="3"/>
+                <ImageButton Padding="10" x:Name="updateRecordButton" Source="{customImage:ImageResource HarperDBStudioMobile.Images.outline_save_white_24dp.png}" Clicked="Update_Table_Record" BackgroundColor="#55c58f"  TabIndex="1"/>
+                <ImageButton Padding="10" x:Name="deleteRecordButton" Source="{customImage:ImageResource HarperDBStudioMobile.Images.outline_delete_forever_white_24dp.png}" Clicked="deleteRecordButton_Clicked" BackgroundColor="#ea4c89"  TabIndex="2"/>
+                <ImageButton Padding="10" x:Name="cancelEditRecordButton" Source="{customImage:ImageResource HarperDBStudioMobile.Images.outline_clear_white_24dp.png}" BackgroundColor="#212121" Clicked="cancelEditRecordButton_Clicked"  TabIndex="3"/>
             </StackLayout>
         </Frame>
 
