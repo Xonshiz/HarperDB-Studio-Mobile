@@ -20,6 +20,18 @@
                      Priority="0" />
     </ContentPage.ToolbarItems>
     <StackLayout x:Name="mainStackLayout">
+        <Frame x:Name="noDataFrame"
+               IsVisible="False"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Margin="20"
+                BackgroundColor="{StaticResource FrameBackgroundColor}">
+                <StackLayout>
+                    <Label Text="No Organization Available" FontAttributes="Bold" FontSize="Title" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" />
+                    <Label Text="Use HarperDB Studio Online to create organizations and Instances." Padding="50" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+                </StackLayout>
+        </Frame>
+
         <StackLayout x:Name="InstanceLoginStackLayout"
                      IsVisible="False"
                      HorizontalOptions="FillAndExpand"

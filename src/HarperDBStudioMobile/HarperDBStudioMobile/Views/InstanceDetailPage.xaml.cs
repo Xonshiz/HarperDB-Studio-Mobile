@@ -287,6 +287,14 @@ namespace HarperDBStudioMobile.Views
                     this.nextPageButton.IsEnabled = false;
                 }
             }
+            if (Convert.ToInt16(this.currentPageLabel.Text) == 1)
+            {
+                this.previousPageButton.IsEnabled = false;
+            }
+            if (Convert.ToInt16(this.currentPageLabel.Text) == Convert.ToInt16(this.totalPageLabel.Text))
+            {
+                this.nextPageButton.IsEnabled = false;
+            }
             this.SwitchLoadingMode(false, String.Empty);
         }
 

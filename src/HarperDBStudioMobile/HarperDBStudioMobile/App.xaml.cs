@@ -20,11 +20,12 @@ namespace HarperDBStudioMobile
 
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
+            
 
             this.ReadAppSettings();
         }
 
-        private async void ReadAppSettings()
+        private void ReadAppSettings()
         {
             try
             {

@@ -34,7 +34,6 @@ namespace HarperDBStudioMobile.Views
             instance_password.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
 
             InstanceCarousel.ItemsSource = instanceModels;
-            //InstanceCarousel.TabIndex = 0;
 
             //Do this when no Internet.
             //ReadInstancesFromCache();
@@ -84,6 +83,13 @@ namespace HarperDBStudioMobile.Views
                     foreach (InstanceModel instance in instanceList.Content.body)
                     {
                         instanceModels.Add(instance);
+                    }
+                    if (instanceModels.Count == 0)
+                    {
+                        noDataFrame.IsVisible = true;
+                        InstanceLoginStackLayout.IsVisible = false;
+                        loadingFrame.IsVisible = false;
+                        InstanceCarousel.IsVisible = false;
                     }
                     try
                     {

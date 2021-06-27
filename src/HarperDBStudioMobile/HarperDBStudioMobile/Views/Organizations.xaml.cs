@@ -39,8 +39,11 @@ namespace HarperDBStudioMobile.Views
             {
                 orgModels.Add(new OrgModel { active_coupons = item.active_coupons, customer_id = item.customer_id, customer_name = item.customer_name, free_cloud_instance_count = item.free_cloud_instance_count, owner_user_id = item.owner_user_id, status = item.status, total_instance_count = item.total_instance_count });
             }
-
-            MainCarousel.TabIndex = 1;
+            if (orgModels.Count == 0)
+            {
+                MainCarousel.IsVisible = false;
+                noDataFrame.IsVisible = true;
+            }
         }
 
         protected override void OnAppearing()
