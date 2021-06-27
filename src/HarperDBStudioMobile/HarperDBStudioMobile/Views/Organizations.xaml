@@ -31,38 +31,44 @@
                 </StackLayout>
         </Frame>
 
-        <CarouselView x:Name="MainCarousel">
-            <CarouselView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout>
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding CarouselItemTapped,Source={x:Reference currentPage}}" CommandParameter="{Binding .}"/>
-                        </StackLayout.GestureRecognizers>
-                        <Frame HasShadow="True"
-                               BorderColor="#201d45"
-                               CornerRadius="5"
-                               Margin="20"
-                               HorizontalOptions="Center"
-                               VerticalOptions="CenterAndExpand"
-                               BackgroundColor="{StaticResource FrameBackgroundColor}">
-                            <StackLayout>
-                                <Label Text="{Binding customer_name}"
-                                       FontAttributes="Bold"
-                                       FontSize="Large"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
-                                <Label Text="{Binding owner_user_id}"
-                                       HorizontalOptions="Center" />
-                                <Label Text="{Binding free_cloud_instance_count}"
-                                       FontAttributes="Italic"
-                                       HorizontalOptions="Center"
-                                       MaxLines="5"
-                                       LineBreakMode="TailTruncation" />
-                            </StackLayout>
-                        </Frame>
-                    </StackLayout>
-                </DataTemplate>
-            </CarouselView.ItemTemplate>
-        </CarouselView>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <CarouselView x:Name="MainCarousel">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CarouselItemTapped,Source={x:Reference currentPage}}" CommandParameter="{Binding .}"/>
+                            </StackLayout.GestureRecognizers>
+                            <Frame HasShadow="True"
+                                   BorderColor="#201d45"
+                                   CornerRadius="5"
+                                   Margin="20"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="StartAndExpand"
+                                   BackgroundColor="{StaticResource FrameBackgroundColor}">
+                                <StackLayout>
+                                    <Label Text="{Binding customer_name}" FontAttributes="Bold" FontSize="Title" HorizontalOptions="FillAndExpand" Margin="10"/>
+                                    <StackLayout Orientation="Horizontal" Margin="10">
+                                        <Label Text="ORG ID:" FontAttributes="None" FontSize="Large" HorizontalOptions="StartAndExpand"/>
+                                        <Label Text="{Binding customer_id}" FontAttributes="None" FontSize="Large" HorizontalOptions="StartAndExpand"/>
+                                    </StackLayout>
+                                    <StackLayout Margin="10">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="ROLE:" FontAttributes="None" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                            <Label Text="{Binding status}" FontAttributes="Bold" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                        <BoxView Color="#000000" WidthRequest="100" HeightRequest="1" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="INSTANCES:" FontAttributes="None" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                            <Label Text="{Binding total_instance_count}" FontAttributes="None" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </AbsoluteLayout>
     </StackLayout>
 </ContentPage>

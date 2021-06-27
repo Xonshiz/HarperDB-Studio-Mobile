@@ -72,24 +72,54 @@
                                 BorderColor="#201d45"
                                 CornerRadius="5"
                                 Margin="20"
-                                HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="StartAndExpand"
                                BackgroundColor="{StaticResource FrameBackgroundColor}">
                             <StackLayout>
-                                <StackLayout>
+                                <Label Text="{Binding instance_name}" FontAttributes="Bold" FontSize="Title" HorizontalOptions="FillAndExpand" Margin="10"/>
+                                <StackLayout Margin="10">
+                                    <Label Text="{Binding url}" FontAttributes="None" FontSize="Small" HorizontalOptions="StartAndExpand" />
+                                </StackLayout>
+                                <StackLayout Margin="10">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="STATUS:" FontAttributes="None" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                        <Label Text="{Binding status}" FontAttributes="Bold" TextColor="#55c58f" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                    <BoxView Color="#000000" WidthRequest="100" HeightRequest="1" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="RAM:" FontAttributes="None" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                        <Label Text="{Binding ram_allocation}" FontAttributes="None" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                    <BoxView Color="#000000" WidthRequest="100" HeightRequest="1" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="DISK:" FontAttributes="None" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                        <Label Text="{Binding data_volume_size}" FontAttributes="None" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                    <BoxView Color="#000000" WidthRequest="100" HeightRequest="1" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="PRIVATE IP:" FontAttributes="None" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                        <Label Text="{Binding private_ip}" FontAttributes="None" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                    <BoxView Color="#000000" WidthRequest="100" HeightRequest="1" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="INSTANCE ID:" FontAttributes="None" FontSize="Medium" HorizontalOptions="StartAndExpand"/>
+                                        <Label Text="{Binding instance_id}" FontAttributes="None" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <!--<StackLayout>
                                     <Label Text="{Binding rule_arn}"
                                         FontAttributes="Bold"
                                         FontSize="Large"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center" />
-                                <Label Text="{Binding rule_arn}"
-                                        HorizontalOptions="Center" />
-                                <Label Text="{Binding instance_name}"
-                                        FontAttributes="Italic"
-                                        HorizontalOptions="Center"
-                                        MaxLines="5"
-                                        LineBreakMode="TailTruncation" />
-                                </StackLayout>
+                                    <Label Text="{Binding rule_arn}"
+                                            HorizontalOptions="Center" />
+                                    <Label Text="{Binding instance_name}"
+                                            FontAttributes="Italic"
+                                            HorizontalOptions="Center"
+                                            MaxLines="5"
+                                            LineBreakMode="TailTruncation" />
+                                </StackLayout>-->
                             </StackLayout>
                         </Frame>
                     </StackLayout>

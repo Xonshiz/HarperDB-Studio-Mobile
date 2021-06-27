@@ -72,19 +72,31 @@
         <StackLayout>
             <Label x:Name="TotalRecordLabel" Margin="10,0,0,0" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" TextColor="#ffffff" />
             <Frame x:Name="gridDataFrame"
-               HasShadow="True"
-               BorderColor="#201d45"
-               CornerRadius="5"
-               Margin="10"
-               Padding="10"
-               HorizontalOptions="CenterAndExpand"
-               BackgroundColor="{StaticResource FrameBackgroundColor}">
+                   HasShadow="True"
+                   BorderColor="#201d45"
+                   CornerRadius="5"
+                   Margin="10"
+                   Padding="10"
+                   HorizontalOptions="CenterAndExpand"
+                   BackgroundColor="{StaticResource FrameBackgroundColor}">
                 <ScrollView Orientation="Horizontal">
                     <StackLayout x:Name="gridStackLayout"
                        BackgroundColor="{StaticResource FrameBackgroundColor}">
 
                     </StackLayout>
                 </ScrollView>
+            </Frame>
+            <Frame x:Name="noDataFrame"
+                   IsVisible="False"
+                   HasShadow="True"
+                   BorderColor="#201d45"
+                   CornerRadius="5"
+                   Margin="30,0,30,10"
+                   Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="{StaticResource FrameBackgroundColor}">
+                <Label Text="No Data" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontAttributes="None" FontSize="Large" Padding="20" />
+
             </Frame>
             <StackLayout x:Name="LoadingStackLayout">
                 <Frame x:Name="loadingFrame"

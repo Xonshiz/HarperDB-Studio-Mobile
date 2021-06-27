@@ -272,9 +272,11 @@ namespace HarperDBStudioMobile.Views
                 this.totalPageLabel.Text = "0";
                 this.previousPageButton.IsEnabled = false;
                 this.nextPageButton.IsEnabled = false;
+                noDataFrame.IsVisible = true;
             }
             else
             {
+                noDataFrame.IsVisible = false;
                 this.totalPageLabel.Text = Convert.ToInt16(((recordCount - 1) / 10) + 1).ToString();
                 if (Convert.ToInt16(this.totalPageLabel.Text) > 1)
                 {
