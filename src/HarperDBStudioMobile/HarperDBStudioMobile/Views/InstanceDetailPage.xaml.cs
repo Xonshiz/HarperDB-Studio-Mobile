@@ -56,7 +56,6 @@ namespace HarperDBStudioMobile.Views
             editRecordEditor.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
             this.previousPageButton.IsEnabled = false;
             this.nextPageButton.IsEnabled = false;
-            addRowButton.IsEnabled = true;
         }
 
         private void CacheSchemaPickerDetails()
@@ -170,9 +169,31 @@ namespace HarperDBStudioMobile.Views
             //this.SwitchLoadingMode(false, String.Empty);
         }
 
+        private string GetSelectedJSONValue(string hashValueToSearch)
+        {
+            foreach (Dictionary<string, string> item in currentTableDataList)
+            {
+                foreach (var _item in item)
+                {
+                    if (_item.Value == hashValueToSearch)
+                    {
+                        return JsonConvert.SerializeObject(item, Formatting.Indented);
+                    }
+                }
+            }
+            return null;
+        }
+
         private async void ScrollingGridView_GridRowTapped(object sender, RowTappedEventArgs e)
         {
-            string editTableData = await this.GetEditTableData(e.hashValue);
+            string editTableData = String.Empty;
+            if (!this._isOffileMode)
+            {
+                editTableData = await this.GetEditTableData(e.hashValue);
+            } else
+            {
+                editTableData = this.GetSelectedJSONValue(e.hashValue);
+            }
             if (String.IsNullOrWhiteSpace(editTableData))
             {
                 await DisplayAlert("No Info Found", $"Couldn't find any info with {e.hashValue} Hash Value.", "Ok");
@@ -440,7 +461,17 @@ namespace HarperDBStudioMobile.Views
                 {
                     this.SwitchLoadingMode(false, String.Empty);
                 }
-                this.PopulateTableData($"[{editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"')}]");
+                var tempObj = JObject.Parse(editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"'));
+
+                var firstObject = tempObj.First;
+                firstObject.AddBeforeSelf(new JProperty("__updatedtime__", "Not Yet Added"));
+                firstObject.AddAfterSelf(new JProperty("__createdtime__", "Not Yet Added"));
+                var Object2 = tempObj.GetValue(hashAttribute, StringComparison.OrdinalIgnoreCase);
+                if (Object2 == null)
+                {
+                    tempObj.Add("hashAttribute", "Not Yet Generated");
+                }
+                this.PopulateTableData($"[{JsonConvert.SerializeObject(tempObj)}]");
 
                 this.SwitchEditTableCard(false);
             } else
@@ -451,6 +482,13 @@ namespace HarperDBStudioMobile.Views
                     var editTableSchema = await editSchemaDetailsClient.InstanceCall(LoggedInUserCurrentSelections.current_instance_auth, cleanString);
                     if (editTableSchema != null && editTableSchema.IsSuccessStatusCode && editTableSchema.Content != null)
                     {
+                        if (operation == "cache")
+                        {
+                            if (cleanString.Contains("\"insert\""))
+                                operation = "insert";
+                            else if (cleanString.Contains("\"delete\""))
+                                operation = "delete";
+                        }
                         switch (operation)
                         {
                             case "insert":
@@ -476,6 +514,8 @@ namespace HarperDBStudioMobile.Views
                 finally
                 {
                     this.SwitchLoadingMode(false, String.Empty);
+                    this.isDeleteRow = false;
+                    this.isAddNewRow = false;
                 }
             }
         }
@@ -588,6 +628,7 @@ namespace HarperDBStudioMobile.Views
         void SwitchLoadingMode(bool isLoading, string dataToShow)
         {
             LoadingStackLayout.IsVisible = isLoading;
+            addRowButton.IsEnabled = !isLoading;
             gridDataFrame.IsVisible = !isLoading;
             TotalRecordLabel.IsVisible = !isLoading;
             NavigationBar.IsVisible = !isLoading;
