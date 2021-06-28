@@ -464,8 +464,14 @@ namespace HarperDBStudioMobile.Views
                 var tempObj = JObject.Parse(editRecordEditor.Text.Replace(System.Environment.NewLine, string.Empty).Replace("\t", string.Empty).Replace('”', '"'));
 
                 var firstObject = tempObj.First;
-                firstObject.AddBeforeSelf(new JProperty("__updatedtime__", "Not Yet Added"));
-                firstObject.AddAfterSelf(new JProperty("__createdtime__", "Not Yet Added"));
+                if (tempObj.ContainsKey("__updatedtime__") == false)
+                {
+                    firstObject.AddBeforeSelf(new JProperty("__updatedtime__", "Not Yet Added"));
+                }
+                if (tempObj.ContainsKey("__createdtime__") == false)
+                {
+                    firstObject.AddAfterSelf(new JProperty("__createdtime__", "Not Yet Added"));
+                }
                 var Object2 = tempObj.GetValue(hashAttribute, StringComparison.OrdinalIgnoreCase);
                 if (Object2 == null)
                 {

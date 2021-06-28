@@ -124,6 +124,16 @@
     <BundleResource Include="Resources\xamarin_logo%402x.png" />
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\120-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\1024.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
