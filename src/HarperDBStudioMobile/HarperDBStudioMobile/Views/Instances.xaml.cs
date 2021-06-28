@@ -28,7 +28,7 @@ namespace HarperDBStudioMobile.Views
         {
             InitializeComponent();
             //Without offline mode, don't try to read from cache. It clashes with the online request.
-            //this.ReadInstanceAuthData();
+            this.ReadInstanceAuthData();
 
             restClient = RestService.For<IRestClient>(Utils.Utils.BASE_API_URL);
             instance_username.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeNone);
