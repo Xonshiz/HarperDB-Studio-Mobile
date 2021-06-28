@@ -3,20 +3,14 @@
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:HarperDBStudioMobile.ViewModels"
              x:Class="HarperDBStudioMobile.Views.Organizations" BackgroundColor="{StaticResource AppBackgroundColor}"
+             xmlns:customImage="clr-namespace:HarperDBStudioMobile.Utils"
              Title="All Organizations" NavigationPage.HasBackButton="False">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Resources"
-                     x:Name="resourcesToolbarItem"
-                     Clicked="resourcesToolbarItem_Clicked"
-                     IconImageSource="example_icon.png"
-                     Order="Secondary"
-                     Priority="0" />
         <ToolbarItem Text="Logout"
-                     x:Name="lougoutToolBarItem"
+                     x:Name="logoutToolBarItem"
                      Clicked="lougoutToolBarItem_Clicked"
-                     IconImageSource="example_icon.png"
-                     Order="Secondary"
-                     Priority="0" />
+                     Order="Primary"
+                     Priority="1" />
     </ContentPage.ToolbarItems>
     <StackLayout>
         <Frame x:Name="noDataFrame"

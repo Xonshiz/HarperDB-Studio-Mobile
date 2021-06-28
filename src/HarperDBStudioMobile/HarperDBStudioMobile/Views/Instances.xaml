@@ -6,18 +6,11 @@
     x:Class="HarperDBStudioMobile.Views.Instances" BackgroundColor="{StaticResource AppBackgroundColor}"
     Title="Instances">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Resources"
-                     x:Name="resourcesToolbarItem"
-                     Clicked="resourcesToolbarItem_Clicked"
-                     IconImageSource="example_icon.png"
-                     Order="Secondary"
-                     Priority="0" />
         <ToolbarItem Text="Logout"
-                     x:Name="lougoutToolBarItem"
+                     x:Name="logoutToolBarItem"
                      Clicked="lougoutToolBarItem_Clicked"
-                     IconImageSource="example_icon.png"
-                     Order="Secondary"
-                     Priority="0" />
+                     Order="Primary"
+                     Priority="1" />
     </ContentPage.ToolbarItems>
     <StackLayout x:Name="mainStackLayout">
         <Frame x:Name="noDataFrame"

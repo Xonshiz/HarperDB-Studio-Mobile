@@ -635,11 +635,6 @@ namespace HarperDBStudioMobile.Views
             loadingBox.Text = dataToShow;
         }
 
-        void resourcesToolbarItem_Clicked(System.Object sender, System.EventArgs e)
-        {
-            Utils.Utils.OpenResourcesWebPage();
-        }
-
         void lougoutToolBarItem_Clicked(System.Object sender, System.EventArgs e)
         {
             Utils.Utils.LogoutUser();

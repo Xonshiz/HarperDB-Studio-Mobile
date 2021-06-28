@@ -218,11 +218,6 @@ namespace HarperDBStudioMobile.Views
             loadingFrame.IsVisible = isLoading;
         }
 
-        void resourcesToolbarItem_Clicked(System.Object sender, System.EventArgs e)
-        {
-            Utils.Utils.OpenResourcesWebPage();
-        }
-
         void lougoutToolBarItem_Clicked(System.Object sender, System.EventArgs e)
         {
             Utils.Utils.LogoutUser();

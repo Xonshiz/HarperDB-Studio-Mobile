@@ -44,6 +44,8 @@
     <None Remove="Images\outline_delete_forever_white_24dp.png" />
     <None Remove="Images\outline_clear_white_24dp.png" />
     <None Remove="Images\outline_save_white_24dp.png" />
+    <None Remove="Images\logout.png" />
+    <None Remove="Images\resources.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />
@@ -55,5 +57,7 @@
     <EmbeddedResource Include="Images\outline_delete_forever_white_24dp.png" />
     <EmbeddedResource Include="Images\outline_clear_white_24dp.png" />
     <EmbeddedResource Include="Images\outline_save_white_24dp.png" />
+    <EmbeddedResource Include="Images\logout.png" />
+    <EmbeddedResource Include="Images\resources.png" />
   </ItemGroup>
 </Project>
