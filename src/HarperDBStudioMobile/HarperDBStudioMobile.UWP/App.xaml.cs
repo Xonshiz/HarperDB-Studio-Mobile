@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Reflection
+using System.Reflection;
 
 namespace HarperDBStudioMobile.UWP
 {
@@ -60,9 +60,6 @@ namespace HarperDBStudioMobile.UWP
                 // you should add `using System.Reflection;`
                 List<Assembly> assembliesToInclude = new List<Assembly>();
                 //Now, add all the assemblies your app uses
-                assembliesToInclude.Add(typeof(Syncfusion.SfDataGrid.XForms.UWP.SfDataGridRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.SfNumericTextBox.XForms.UWP.SfNumericTextBoxRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.ComboBox.SfComboBoxRenderer).GetTypeInfo().Assembly);
 
                 global::Xamarin.Forms.Forms.SetFlags("Shell_UWP_Experimental");
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
