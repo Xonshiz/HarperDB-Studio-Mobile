@@ -14,7 +14,8 @@
                      Priority="1" />
     </ContentPage.ToolbarItems>
 
-    <StackLayout VerticalOptions="FillAndExpand">
+    <ScrollView>
+        <StackLayout VerticalOptions="FillAndExpand">
         <Label x:Name="noNetworkLabel" HorizontalOptions="CenterAndExpand" Text="You're Currently offline." FontSize="Header" TextColor="Red" FontAttributes="Bold" IsVisible="False" />
         <StackLayout x:Name="pickerStackLayout"
                      Margin="20, 20, 20, 0">
@@ -123,4 +124,5 @@
             </StackLayout>
         </StackLayout>
     </StackLayout>
+    </ScrollView>
 </ContentPage>

@@ -37,8 +37,8 @@
                    VerticalOptions="CenterAndExpand"
                    BackgroundColor="{StaticResource FrameBackgroundColor}">
                 <StackLayout>
-                    <Entry x:Name="instance_username"  TabIndex="0"/>
-                    <Entry x:Name="instance_password" IsPassword="True"  TabIndex="1"/>
+                    <Entry x:Name="instance_username" Placeholder="Instance Username"  TabIndex="0"/>
+                    <Entry x:Name="instance_password" Placeholder="Instance Password" IsPassword="True"  TabIndex="1"/>
                     <Button x:Name="instance_submit_button" Text="Submit" Clicked="instance_submit_button_Clicked" Margin="0,20,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"  TabIndex="2"/>
                     <Button x:Name="instance_cancel_button" Text="Cancel" Clicked="instance_cancel_button_Clicked" Margin="0,10,0,0" BackgroundColor="{StaticResource AppBackgroundColor}" BorderColor="#ffffff"  TabIndex="3"/>
                 </StackLayout>
