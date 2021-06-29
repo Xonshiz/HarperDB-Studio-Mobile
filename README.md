@@ -33,7 +33,7 @@ Here's a little video demonstrating the offline mode.
 - Complete offline mode (from "logging in" to browsing instances and organizations).
 - UI/UX improvements.
 
-I wrote a big paragraph on where HarperDB team should be working on, but this app I built isn't storing cached data in encrypted strings either. Well, there is a reason for that and it's that Xamarin doesn't have any inbuilt "cryptography" mechanism. They do have "SecureStorage", which is said to be better than storing any data in cache in plain string format. But, since I was developing and testing on "Simulator" (iOS), that implementation failed. So, I had to resort to normal App settings cache for storing data. But, when I'm done with these mentioned changes, I'll invest some time in that area as well.
+This current app isn't storing cached data in encrypted strings. Well, there is a reason for that and it's that Xamarin doesn't have any inbuilt "cryptography" mechanism. They do have "SecureStorage", which is said to be better than storing any data in cache in plain string format. But, since I was developing and testing on "Simulator" (iOS), that implementation failed. So, I had to resort to normal App settings cache for storing data. But, when I'm done with these mentioned changes, I'll invest some time in that area as well.
 
 The offline mode is good, the only limit of it as of now is that it kicks in only if you're on the grid page (where you can access tables and schema). So, if you're browsing Organizations or looking at Instance list, you can't browse the entire application in offline mode. So, I'd like to work on that area and will try to make this entire app "offline" itself.
 
