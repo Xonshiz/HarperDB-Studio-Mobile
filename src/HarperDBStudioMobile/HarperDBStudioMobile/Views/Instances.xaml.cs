@@ -147,6 +147,8 @@ namespace HarperDBStudioMobile.Views
             {
                 return;
             }
+            instance_username.Text = instance_username.Text.Trim();
+            instance_password.Text = instance_password.Text.Trim();
             try
             {
                 InstanceLoginStackLayout.IsVisible = false;

@@ -62,6 +62,8 @@ namespace HarperDBStudioMobile.Views
             {
                 return;
             }
+            user_email.Text = user_email.Text.Trim();
+            user_password.Text = user_password.Text.Trim();
             this.LoginUser();
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             

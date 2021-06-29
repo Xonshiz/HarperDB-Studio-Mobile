@@ -12,7 +12,8 @@
                      Order="Primary"
                      Priority="1" />
     </ContentPage.ToolbarItems>
-    <StackLayout x:Name="mainStackLayout">
+    <ScrollView>
+        <StackLayout x:Name="mainStackLayout">
         <Frame x:Name="noDataFrame"
                IsVisible="False"
                 HorizontalOptions="CenterAndExpand"
@@ -99,20 +100,6 @@
                                         <Label Text="{Binding instance_id}" FontAttributes="None" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
                                     </StackLayout>
                                 </StackLayout>
-                                <!--<StackLayout>
-                                    <Label Text="{Binding rule_arn}"
-                                        FontAttributes="Bold"
-                                        FontSize="Large"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center" />
-                                    <Label Text="{Binding rule_arn}"
-                                            HorizontalOptions="Center" />
-                                    <Label Text="{Binding instance_name}"
-                                            FontAttributes="Italic"
-                                            HorizontalOptions="Center"
-                                            MaxLines="5"
-                                            LineBreakMode="TailTruncation" />
-                                </StackLayout>-->
                             </StackLayout>
                         </Frame>
                     </StackLayout>
@@ -121,4 +108,5 @@
         </CarouselView>
         </StackLayout>
     </StackLayout>
+    </ScrollView>
 </ContentPage>

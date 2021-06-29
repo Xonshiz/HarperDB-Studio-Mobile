@@ -40,10 +40,10 @@ namespace HarperDBStudioMobile.Views
 
             if (addKey)
             {
-                layout.Children.Add(new Label { Text = key, Padding = 0, Margin = 0, FontAttributes = FontAttributes.Bold });
+                layout.Children.Add(new Label { Text = key, Padding = 0, Margin = 0, FontAttributes = FontAttributes.Bold, TextColor = Color.Black });
             } else
             {
-                layout.Children.Add(new Label { Text = value, Padding = 0, Margin = 0 });
+                layout.Children.Add(new Label { Text = value, Padding = 0, Margin = 0, TextColor = Color.Black });
             }
             
 
