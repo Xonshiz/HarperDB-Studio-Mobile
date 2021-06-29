@@ -12,10 +12,8 @@ using HarperDBStudioMobile.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Refit;
-using Syncfusion.SfDataGrid.XForms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.DataGrid;
 
 namespace HarperDBStudioMobile.Views
 {

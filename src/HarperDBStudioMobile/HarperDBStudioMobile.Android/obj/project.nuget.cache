@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lONfH8NVRCD05r6RrEw/KzJhYyQW3Y/vf0azsT3hCJAGJMp47U403q/0t5VeR9vOLsF1ntHqA+5H/oqWK4Yl8Q==",
+  "dgSpecHash": "sJeSjznl0viWof3WvAgGwVSIxoLwbVAlO5oGtWQ+vIDHPR8qiKNB1fJbtmaT9aliVhLs+0NOAYHwJx4bCFSHKQ==",
   "success": true,
   "projectFilePath": "/Users/xonshiz/Documents/GitHub/HarperDB-Studio-Mobile/src/HarperDBStudioMobile/HarperDBStudioMobile.Android/HarperDBStudioMobile.Android.csproj",
   "expectedPackageFiles": [
@@ -8,12 +8,6 @@
     "/Users/xonshiz/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/refit/6.0.38/refit.6.0.38.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/refit.newtonsoft.json/6.0.38/refit.newtonsoft.json.6.0.38.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/syncfusion.licensing/19.1.0.69/syncfusion.licensing.19.1.0.69.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.core/19.1.0.69/syncfusion.xamarin.core.19.1.0.69.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.gridcommon/19.1.0.69/syncfusion.xamarin.gridcommon.19.1.0.69.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.sfcombobox/19.1.0.69/syncfusion.xamarin.sfcombobox.19.1.0.69.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.sfdatagrid/19.1.0.69/syncfusion.xamarin.sfdatagrid.19.1.0.69.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/syncfusion.xamarin.sfnumerictextbox/19.1.0.69/syncfusion.xamarin.sfnumerictextbox.19.1.0.69.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.net.http.json/5.0.0/system.net.http.json.5.0.0.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
@@ -66,7 +60,6 @@
     "/Users/xonshiz/.nuget/packages/xamarin.androidx.viewpager2/1.0.0.8/xamarin.androidx.viewpager2.1.0.0.8.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.essentials/1.6.1/xamarin.essentials.1.6.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512",
-    "/Users/xonshiz/.nuget/packages/xamarin.forms.datagrid/4.8.0/xamarin.forms.datagrid.4.8.0.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.google.android.material/1.2.1.1/xamarin.google.android.material.1.2.1.1.nupkg.sha512",
     "/Users/xonshiz/.nuget/packages/xamarin.google.guava.listenablefuture/1.0.0.2/xamarin.google.guava.listenablefuture.1.0.0.2.nupkg.sha512"
   ],

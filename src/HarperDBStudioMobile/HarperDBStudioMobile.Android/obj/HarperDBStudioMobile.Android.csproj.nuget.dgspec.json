@@ -48,10 +48,6 @@
               "target": "Package",
               "version": "[6.0.38, )"
             },
-            "Syncfusion.Xamarin.SfDataGrid": {
-              "target": "Package",
-              "version": "[19.1.0.69, )"
-            },
             "Xamarin.Essentials": {
               "target": "Package",
               "version": "[1.6.1, )"
@@ -59,10 +55,6 @@
             "Xamarin.Forms": {
               "target": "Package",
               "version": "[5.0.0.2012, )"
-            },
-            "Xamarin.Forms.DataGrid": {
-              "target": "Package",
-              "version": "[4.8.0, )"
             }
           }
         }
@@ -120,10 +112,6 @@
               "target": "Package",
               "version": "[6.0.38, )"
             },
-            "Syncfusion.Xamarin.SfDataGrid": {
-              "target": "Package",
-              "version": "[19.1.0.69, )"
-            },
             "Xamarin.Essentials": {
               "target": "Package",
               "version": "[1.6.1, )"
@@ -131,10 +119,6 @@
             "Xamarin.Forms": {
               "target": "Package",
               "version": "[5.0.0.2012, )"
-            },
-            "Xamarin.Forms.DataGrid": {
-              "target": "Package",
-              "version": "[4.8.0, )"
             }
           },
           "imports": [
